@@ -17,7 +17,7 @@ void set_first_info(t_info *pc, int n)
 	pc->begin = 0;
 	pc->end = n;
 	pc->amount = pc->end - pc->begin;
-	pc->lett = 'A';
+	pc->lt = 'A';
 
 }
 
@@ -31,10 +31,10 @@ void divide_piece_info(t_info *pc)
 	old = pc;
 	pc++;
 	mid = (old->begin + old->end) / 2;
-	if (old->lett == 'A')
-		pc->lett = 'B';
-	else if (old->lett == 'B')
-		pc->lett = 'A';
+	if (old->lt == 'A')
+		pc->lt = 'B';
+	else if (old->lt == 'B')
+		pc->lt = 'A';
 	pc->begin = old->begin;
 	pc->end = mid;
 	pc->amount = pc->end - pc->begin;
@@ -44,11 +44,10 @@ void divide_piece_info(t_info *pc)
 
 void	print_piece(t_info piece0)
 {
-	printf("order = %d, ", piece0.order);
 	printf("begin = %d, ", piece0.begin);
 	printf("end = %d, ", piece0.end);
 	printf("amount= %d, ", piece0.amount);
-	printf("lett  = %c\n", piece0.lett);
+	printf("lt  = %c\n", piece0.lt);
 	printf("~~~~~~~~~~~~~\n");
 }
 
@@ -61,7 +60,7 @@ int	*make_me_sorted(t_stacks *st)
 	sorted = (int *)malloc(sizeof(int) * st->n);
 	i = -1;
 	while (++i < st->n)
-		sorted[i] = st->arr_a[i];
+		sorted[i] = st->a[i];
 	sort_array(sorted, st->n);
 
 //print sorted array
@@ -80,8 +79,8 @@ int	*make_me_sorted(t_stacks *st)
 
 void		free_stacks(t_stacks *st)
 {
-	free(st->arr_a);
-	free(st->arr_b);
+	free(st->a);
+	free(st->b);
 	free(st);	
 }
 
@@ -89,18 +88,18 @@ void	print_arrays(t_stacks *st)
 {
 	int i;
 
-	printf("\033[0;36m arr_a:       \033[0m");
-	printf("%3d,", st->ptr_a);
+	printf("\033[0;36m a:       \033[0m");
+	printf("%3d,", st->pa);
 	i = -1;
 	while (++i < st->n)
-		printf("%4d", st->arr_a[i]);
+		printf("%4d", st->a[i]);
 	printf("\n");
 
-	printf("\033[0;36m arr_b:      \033[0m ");
-	printf("%3d,", st->ptr_b);
+	printf("\033[0;36m b:      \033[0m ");
+	printf("%3d,", st->pb);
 	i = -1;
 	while (++i < st->n)
-		printf("%4d", st->arr_b[i]);
+		printf("%4d", st->b[i]);
 	printf("\033[0;33m \n~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n \033[0m");
 }
 
@@ -119,17 +118,16 @@ void	process_stacks(t_stacks *st, t_info *pc, int *sorted)
 		i++;
 	}
 	// printf("in processing i = %d\n", i);
-//	pc[i].order = 1;
 	if (pc[i].amount > 4)
 	{		
 		count = pc[i].amount;
 		divide_piece_info(pc + i);
 		// print_piece(pc[i + 1]);
 
-		// if (pc[i].lett == 'A')
-		// 	count = st->n - st->ptr_a;
-		// else if (pc[i].lett == 'B')
-		// 	count = st->n - st->ptr_b - 1;
+		// if (pc[i].lt == 'A')
+		// 	count = st->n - st->pa;
+		// else if (pc[i].lt == 'B')
+		// 	count = st->n - st->pb - 1;
 
 		// printf("count = %d\n", count);
 		j = 0;
@@ -139,10 +137,10 @@ void	process_stacks(t_stacks *st, t_info *pc, int *sorted)
 		while (j < count)
 		{
 //			write(1, "R\n", 2);
-			if (pc[i].lett == 'A')
+			if (pc[i].lt == 'A')
 			{
-				if (st->arr_a[st->ptr_a] >= sorted[pc[i + 1].begin] &&
-					st->arr_a[st->ptr_a] < sorted[pc[i + 1].end])
+				if (st->a[st->pa] >= sorted[pc[i + 1].begin] &&
+					st->a[st->pa] < sorted[pc[i + 1].end])
 					action(st, "pb");
 				else
 				{
@@ -150,11 +148,11 @@ void	process_stacks(t_stacks *st, t_info *pc, int *sorted)
 					rot_cnt++;
 				}
 			}
-			else if (pc[i].lett == 'B')
+			else if (pc[i].lt == 'B')
 			{
 				//printf("IN B\n");
-				if (st->arr_b[st->ptr_b + 1] >= sorted[pc[i + 1].begin] &&
-					st->arr_b[st->ptr_b + 1] < sorted[pc[i + 1].end])
+				if (st->b[st->pb + 1] >= sorted[pc[i + 1].begin] &&
+					st->b[st->pb + 1] < sorted[pc[i + 1].end])
 				{
 
 					action(st, "pa");
@@ -170,9 +168,9 @@ void	process_stacks(t_stacks *st, t_info *pc, int *sorted)
 		//put back rotations
 		while (rot_cnt > 0 && pc[i].amount < st->n)
 		{
-			if (pc[i].lett == 'A')
+			if (pc[i].lt == 'A')
 				action(st, "rra");
-			else if (pc[i].lett == 'B')
+			else if (pc[i].lt == 'B')
 				action(st, "rrb");
 			rot_cnt--;
 		}
@@ -191,26 +189,24 @@ void	process_stacks(t_stacks *st, t_info *pc, int *sorted)
 			sort_4_elements(st, pc + i);
 		print_piece(pc[i]);
 
-//		...launch sorting;
-//		...reset order;
 	}
 //	printf("%d\n", pc[i].end);
 	// printf("FINISHED\n\n");
 }
 
 
-//if ptr_a is 0 and st->arr_a is sorted, then return 1
+//if pa is 0 and st->a is sorted, then return 1
 //else return 0
 int	check_stacks(t_stacks *st)
 {
 	int i;
 
-	if (st->ptr_a != 0)
+	if (st->pa != 0)
 		return (0);
 	i = 0;
 	while (i < st->n - 1)
 	{
-		if (st->arr_a[i] > st->arr_a[i + 1])
+		if (st->a[i] > st->a[i + 1])
 			return (0);
 		i++;
 	}
@@ -227,14 +223,9 @@ int main()
 	t_stacks	*st;
 	int			count;
 
-	n = 17; 
-	pc = (t_info *)malloc(sizeof(t_info) * 50);
+	n = 23; 
+	pc = (t_info *)malloc(sizeof(t_info) * 100);
 	i = 0;
-	// while (i < 50)
-	// {
-	// 	pc[i].order = 0;
-	// 	i++;
-	// }
 	set_first_info(pc, n);
 	// // print_piece(pc[0]);
 	// divide_piece_info(pc);
@@ -248,16 +239,17 @@ int main()
 
 
 	st = (t_stacks *)malloc(sizeof(t_stacks));
-	st->arr_a = (int *)malloc(sizeof(int) * n);
-	st->arr_b = (int *)malloc(sizeof(int) * n);
+	st->a = (int *)malloc(sizeof(int) * n);
+	st->b = (int *)malloc(sizeof(int) * n);
 	st->n = n;
-	st->ptr_a = 0;
-	st->ptr_b = n - 1;
+	st->pa = 0;
+	st->pb = n - 1;
 
-	set_arr_to_zero(st->arr_b, st->n);
-	set_arr_with_numbers(st->arr_a, st->n);
+	set_arr_to_zero(st->b, st->n);
+	set_arr_with_numbers(st->a, st->n);
 	sorted = make_me_sorted(st);
 	print_arrays(st);
+
 	// 	push_1_to_2(st, 'A');
 		// push_1_to_2(st, 'A');
 		// push_1_to_2(st, 'A');
@@ -267,12 +259,12 @@ int main()
 	// swap_in_stack(st, 'B');
 	// rotate(st, 'B');
 
-	//count - сколько раз надо прогнать стэк А/B. равно n - ptr_a/b.
+	//count - сколько раз надо прогнать стэк А/B. равно n - pa/b.
 
 //работаем над тем, чтобы провернуть А count раз.
 //если элементы в выбранном диапазоне, то убирем в В, иначе rotate_a
 //знаем, что берем с А
-// st->arr_a[st->ptr_a] - верхний элемент
+// st->a[st->pa] - верхний элемент
 //если нечетное кол-во, то бОльшее отдаем в след.стэк
 
 	while (check_stacks(st) == 0)
@@ -280,40 +272,61 @@ int main()
 		process_stacks(st, pc, sorted);
 		print_arrays(st);
 	}
-	// printf("checking stack: %d\n", check_stacks(st));
 
-	// printf("checking stack: %d\n", check_stacks(st));
-	// process_stacks(st, pc, sorted);
-	// print_arrays(st);
+
+
+// 	printf("checking stack: %d\n", check_stacks(st));
+// 	process_stacks(st, pc, sorted);
+// 	print_arrays(st);
 	
-	// printf("checking stack: %d\n", check_stacks(st));
-	// process_stacks(st, pc, sorted);
-	// print_arrays(st);
+// 	printf("checking stack: %d\n", check_stacks(st));
+// 	process_stacks(st, pc, sorted);
+// 	print_arrays(st);
 	
-	// printf("checking stack: %d\n", check_stacks(st));
-	// process_stacks(st, pc, sorted);
-	// print_arrays(st);
+// 	printf("checking stack: %d\n", check_stacks(st));
+// 	process_stacks(st, pc, sorted);
+// 	print_arrays(st);
 	
-	// printf("checking stack: %d\n", check_stacks(st));
-	// process_stacks(st, pc, sorted);
-	// print_arrays(st);
+// 	printf("checking stack: %d\n", check_stacks(st));
+// 	process_stacks(st, pc, sorted);
+// 	print_arrays(st);
 	
-	// printf("checking stack: %d\n", check_stacks(st));
-	// process_stacks(st, pc, sorted);
-	// print_arrays(st);
+// 	printf("checking stack: %d\n", check_stacks(st));
+// 	process_stacks(st, pc, sorted);
+// 	print_arrays(st);
 
-	// printf("checking stack: %d\n", check_stacks(st));
-	// process_stacks(st, pc, sorted);
-	// print_arrays(st);
+// 	printf("checking stack: %d\n", check_stacks(st));
+// 	process_stacks(st, pc, sorted);
+// 	print_arrays(st);
 
-	// printf("checking stack: %d\n", check_stacks(st));
-	// process_stacks(st, pc, sorted);
-	// print_arrays(st);
 
-	// printf("checking stack: %d\n", check_stacks(st));
-	// process_stacks(st, pc, sorted);
-	// print_arrays(st);
+// 	printf("checking stack: %d\n", check_stacks(st));
+// 	process_stacks(st, pc, sorted);
+// 	print_arrays(st);
 
+// 	printf("checking stack: %d\n", check_stacks(st));
+// 	process_stacks(st, pc, sorted);
+// 	print_arrays(st);
+
+// 	printf("checking stack: %d\n", check_stacks(st));
+// 	process_stacks(st, pc, sorted);
+// 	print_arrays(st);
+
+// 	printf("checking stack: %d\n", check_stacks(st));
+// 	process_stacks(st, pc, sorted);
+// 	print_arrays(st);
+
+// 	printf("checking stack: %d\n", check_stacks(st));
+// 	process_stacks(st, pc, sorted);
+// 	print_arrays(st);
+// printf("FFFFFFFFFFFF\n");
+// 	printf("checking stack: %d\n", check_stacks(st));
+// 	process_stacks(st, pc, sorted);
+// 	print_arrays(st);
+
+// 	printf("checking stack: %d\n", check_stacks(st));
+// 	process_stacks(st, pc, sorted);
+// 	print_arrays(st);
 	// printf("checking stack: %d\n", check_stacks(st));
 
 	// print_piece(pc[0]);

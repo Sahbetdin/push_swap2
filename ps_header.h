@@ -8,10 +8,10 @@
 
 typedef struct	s_stacks
 {
-	int			*arr_a;
-	int			*arr_b;
-	int			ptr_a;
-	int			ptr_b;
+	int			*a;
+	int			*b;
+	int			pa;
+	int			pb;
 	int			n;
 }				t_stacks;
 
@@ -20,8 +20,7 @@ typedef struct	s_info
 	int			begin;
 	int			end;
 	int			amount;
-	char		lett;
-	int			order;
+	char		lt;
 }				t_info;
 
 void	set_arr_to_zero(int *b, int n);

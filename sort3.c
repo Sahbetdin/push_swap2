@@ -17,24 +17,24 @@ void	sort_3_elements(t_stacks *st, t_info *pc0, int *srt)
 	// printf("NOW WE SORT 3 ELEMENTS\n");
 	// printf("begin %d\n", srt[pc0->begin]);
 	// printf("end  %d\n", srt[pc0->end - 1]);
-	// printf("lett  %c\n", pc0->lett);
-	if (pc0->lett == 'A')
+	// printf("lt  %c\n", pc0->lt);
+	if (pc0->lt == 'A')
 	{
-		if (st->arr_a[st->ptr_a] == srt[pc0->begin])
+		if (st->a[st->pa] == srt[pc0->begin])
 		{ //works fine
 			// printf("VOT\n");
 			action(st, "ra");
 			sort_2_elements(st, pc0);
 		}
-		else if (st->arr_a[st->ptr_a + 1] == srt[pc0->begin])
+		else if (st->a[st->pa + 1] == srt[pc0->begin])
 		{ //works fine
 			// printf("BRE\n");
 			action(st, "sa");
 			action(st, "ra");
 			sort_2_elements(st, pc0);
 		}
-		else if (st->arr_a[st->ptr_a + 2] < st->arr_a[st->ptr_a] &&
-			st->arr_a[st->ptr_a] < st->arr_a[st->ptr_a + 1])
+		else if (st->a[st->pa + 2] < st->a[st->pa] &&
+			st->a[st->pa] < st->a[st->pa + 1])
 		{//works fine
 			// printf("GLE\n");
 
@@ -45,8 +45,8 @@ void	sort_3_elements(t_stacks *st, t_info *pc0, int *srt)
 				action(st, "ra");
 				action(st, "ra");
 		}
-		else if (st->arr_a[st->ptr_a + 2] < st->arr_a[st->ptr_a + 1] &&
-			st->arr_a[st->ptr_a + 1] < st->arr_a[st->ptr_a])
+		else if (st->a[st->pa + 2] < st->a[st->pa + 1] &&
+			st->a[st->pa + 1] < st->a[st->pa])
 		{//works fine
 			// printf("LED\n");
 			action(st, "pb");
@@ -57,23 +57,23 @@ void	sort_3_elements(t_stacks *st, t_info *pc0, int *srt)
 			action(st, "ra");
 		}
 	}
-	else if (pc0->lett == 'B')
+	else if (pc0->lt == 'B')
 	{
-		if (st->arr_b[st->ptr_b + 1] == srt[pc0->begin])
+		if (st->b[st->pb + 1] == srt[pc0->begin])
 		{
 			action(st, "pa");
 			action(st, "ra");
 			sort_2_elements(st, pc0);
 		}
-		else if (st->arr_b[st->ptr_b + 2] == srt[pc0->begin])
+		else if (st->b[st->pb + 2] == srt[pc0->begin])
 		{
 			action(st, "sb");
 			action(st, "pa");
 			action(st, "ra");
 			sort_2_elements(st, pc0);
 		}
-		else if (st->arr_b[st->ptr_b + 3] < st->arr_b[st->ptr_b + 1] &&
-			st->arr_b[st->ptr_b + 1] < st->arr_b[st->ptr_b + 2])
+		else if (st->b[st->pb + 3] < st->b[st->pb + 1] &&
+			st->b[st->pb + 1] < st->b[st->pb + 2])
 		{
 				action(st, "pa");
 				action(st, "sb");
@@ -83,8 +83,8 @@ void	sort_3_elements(t_stacks *st, t_info *pc0, int *srt)
 				action(st, "pa");
 				action(st, "ra");
 		}
-		else if (st->arr_b[st->ptr_b + 3] < st->arr_b[st->ptr_b + 2] &&
-			st->arr_b[st->ptr_b + 2] < st->arr_b[st->ptr_b + 1])
+		else if (st->b[st->pb + 3] < st->b[st->pb + 2] &&
+			st->b[st->pb + 2] < st->b[st->pb + 1])
 		{
 				action(st, "pa");
 				action(st, "pa");
@@ -95,7 +95,11 @@ void	sort_3_elements(t_stacks *st, t_info *pc0, int *srt)
 		}
 
 	}
+	pc0->lt = 0;
+	pc0->begin = 0;
+	pc0->end = 0;
+	pc0->amount = 0;
 }
 
 
-//gcc ps.c funs1.c sort4.c sort2.c sort3.c  && /a.out
+//gcc ps.c funs1.c sort4.c sort2.c sort3.c  && ./a.out

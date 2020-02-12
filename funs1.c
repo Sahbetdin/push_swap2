@@ -72,15 +72,40 @@ void	set_arr_to_zero(int *b, int n)
 void	set_arr_with_numbers(int *a, int n)
 {
 	//17 чисел
-	a[0] = 15; a[1] = 21; a[2] = 23; 
-	a[3] = 8; a[4] = 20; 
-	a[5] = 2; 
-	a[6] = 3; 
-	a[7] = 9; a[8] = 14; a[9] = 16; a[10] = 18; 
-	a[11] = 10; a[12] = 11; 
-	a[13] = 4; 
-	a[14] = 13; a[15] = 12;
-	a[16] = 6;
+	// a[0] = 15; a[1] = 21; a[2] = 23; 
+	// a[3] = 8; a[4] = 20; 
+	// a[5] = 2; 
+	// a[6] = 3; 
+	// a[7] = 9; a[8] = 14; a[9] = 16; a[10] = 18; 
+	// a[11] = 10; a[12] = 11; 
+	// a[13] = 4; 
+	// a[14] = 13; a[15] = 12;
+	// a[16] = 6;
+	
+	//23 чисел
+a[0] = 27;
+a[1] = 42;
+a[2] = 19;
+a[3] = 5;
+a[4] = 45;
+a[5] = 47;
+a[6] = 25;
+a[7] = 46;
+a[8] = 22;
+a[9] = 36;
+a[10] = 20;
+a[11] = 33;
+a[12] = 44;
+a[13] = 10;
+a[14] = 49;
+a[15] = 48;
+a[16] = 43;
+a[17] = 15;
+a[18] = 8;
+a[19] = 16;
+a[20] = 9;
+a[21] = 50;
+a[22] = 13;
 }
 
 
@@ -89,15 +114,15 @@ void	push_1_to_2(t_stacks *st, char c)
 {
 	if (c == 'A') //push from A to B
 	{
-		st->arr_b[st->ptr_b] = st->arr_a[st->ptr_a];
-		st->ptr_a++;
-		st->ptr_b--;
+		st->b[st->pb] = st->a[st->pa];
+		st->pa++;
+		st->pb--;
 	}
 	else if (c == 'B') //push from B to A
 	{
-		st->ptr_a--;
-		st->ptr_b++;
-		st->arr_a[st->ptr_a] = st->arr_b[st->ptr_b];
+		st->pa--;
+		st->pb++;
+		st->a[st->pa] = st->b[st->pb];
 	}
 }
 
@@ -109,19 +134,19 @@ void	rotate(t_stacks *st, char c)
 
 	if (c == 'A')
 	{
-		tmp = st->arr_a[st->ptr_a];
-		i = st->ptr_a - 1;
+		tmp = st->a[st->pa];
+		i = st->pa - 1;
 		while (++i < st->n - 1)
-			st->arr_a[i] = st->arr_a[i + 1];
-		st->arr_a[i] = tmp;
+			st->a[i] = st->a[i + 1];
+		st->a[i] = tmp;
 	}
 	else if (c == 'B')
 	{
-		tmp = st->arr_b[st->ptr_b + 1];
-		i = st->ptr_b; //starts from next one
+		tmp = st->b[st->pb + 1];
+		i = st->pb; //starts from next one
 		while (++i < st->n - 1)
-			st->arr_b[i] = st->arr_b[i + 1];
-		st->arr_b[i] = tmp;
+			st->b[i] = st->b[i + 1];
+		st->b[i] = tmp;
 	}
 }
 
@@ -133,37 +158,37 @@ void	reverse_rotate(t_stacks *st, char c)
 	i = st->n - 1;
 	if (c == 'A')
 	{
-		tmp = st->arr_a[i];
-		while (i > st->ptr_a)
+		tmp = st->a[i];
+		while (i > st->pa)
 		{
-			st->arr_a[i] = st->arr_a[i - 1];
+			st->a[i] = st->a[i - 1];
 			i--;
 		}
-		st->arr_a[st->ptr_a] = tmp;
+		st->a[st->pa] = tmp;
 	}
 	else if (c == 'B')
 	{
-		tmp = st->arr_b[i];
-		while (i > st->ptr_b + 1)
+		tmp = st->b[i];
+		while (i > st->pb + 1)
 		{
-			st->arr_b[i] = st->arr_b[i - 1];
+			st->b[i] = st->b[i - 1];
 			i--;
 		}
-		st->arr_b[st->ptr_b + 1] = tmp;
+		st->b[st->pb + 1] = tmp;
 	}
 }
 
 //swap first two elements in stack c
 void	swap_in_stack(t_stacks *st, char c)
 {
-	if (c == 'A' && st->ptr_a < st->n - 1)
+	if (c == 'A' && st->pa < st->n - 1)
 	{
-		ft_swap(st->arr_a + st->ptr_a, st->arr_a + st->ptr_a + 1);
+		ft_swap(st->a + st->pa, st->a + st->pa + 1);
 	}
-	else if (c == 'B' && st->ptr_b + 2 < st->n)
+	else if (c == 'B' && st->pb + 2 < st->n)
 	{
 		// printf("WAS\n");
-		ft_swap(st->arr_b + st->ptr_b + 1, st->arr_b + st->ptr_b + 2);
+		ft_swap(st->b + st->pb + 1, st->b + st->pb + 2);
 	}
 }
 
