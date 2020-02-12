@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ps.c                                               :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: btrifle <marvin@42.fr>                     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/02/12 16:53:00 by btrifle           #+#    #+#             */
+/*   Updated: 2020/02/12 16:53:01 by btrifle          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "ps_header.h"
 
 void set_first_info(t_info *pc, int n)
@@ -106,7 +118,7 @@ void	process_stacks(t_stacks *st, t_info *pc, int *sorted)
 			break;
 		i++;
 	}
-	printf("in processing i = %d\n", i);
+	// printf("in processing i = %d\n", i);
 //	pc[i].order = 1;
 	if (pc[i].amount > 4)
 	{		
@@ -119,10 +131,10 @@ void	process_stacks(t_stacks *st, t_info *pc, int *sorted)
 		// else if (pc[i].lett == 'B')
 		// 	count = st->n - st->ptr_b - 1;
 
-		printf("count = %d\n", count);
+		// printf("count = %d\n", count);
 		j = 0;
 		// // printf("%d %d\n", sorted[pc[1].begin] , sorted[pc[1].end]);
-		printf("%d %d\n", sorted[pc[i + 1].begin], sorted[pc[i + 1].end]);
+		// printf("%d %d\n", sorted[pc[i + 1].begin], sorted[pc[i + 1].end]);
 		rot_cnt = 0; //rotations count
 		while (j < count)
 		{
@@ -169,12 +181,12 @@ void	process_stacks(t_stacks *st, t_info *pc, int *sorted)
 	}
 	else
 	{
-		printf("NOW < 4\n");
-		printf("i = %d\n", i);
+		// printf("NOW < 4\n");
+		// printf("i = %d  %d\n", i, pc[i].amount);
 		if (pc[i].amount == 2)
 			sort_2_elements(st, pc + i);
 		else if (pc[i].amount == 3)
-			;
+			sort_3_elements(st, pc + i, sorted);
 		else if (pc[i].amount == 4)
 			sort_4_elements(st, pc + i);
 		print_piece(pc[i]);
@@ -183,7 +195,26 @@ void	process_stacks(t_stacks *st, t_info *pc, int *sorted)
 //		...reset order;
 	}
 //	printf("%d\n", pc[i].end);
-	printf("FINISHED\n\n");
+	// printf("FINISHED\n\n");
+}
+
+
+//if ptr_a is 0 and st->arr_a is sorted, then return 1
+//else return 0
+int	check_stacks(t_stacks *st)
+{
+	int i;
+
+	if (st->ptr_a != 0)
+		return (0);
+	i = 0;
+	while (i < st->n - 1)
+	{
+		if (st->arr_a[i] > st->arr_a[i + 1])
+			return (0);
+		i++;
+	}
+	return (1);
 }
 
 
@@ -196,7 +227,7 @@ int main()
 	t_stacks	*st;
 	int			count;
 
-	n = 17;
+	n = 17; 
 	pc = (t_info *)malloc(sizeof(t_info) * 50);
 	i = 0;
 	// while (i < 50)
@@ -244,27 +275,46 @@ int main()
 // st->arr_a[st->ptr_a] - верхний элемент
 //если нечетное кол-во, то бОльшее отдаем в след.стэк
 
-	process_stacks(st, pc, sorted);
-	print_arrays(st);
-	process_stacks(st, pc, sorted);
-	print_arrays(st);
-	process_stacks(st, pc, sorted);
-	print_arrays(st);
-	process_stacks(st, pc, sorted);
-	print_arrays(st);
-	
-	process_stacks(st, pc, sorted);
-	print_arrays(st);
-	
-	process_stacks(st, pc, sorted);
-	print_arrays(st);
+	while (check_stacks(st) == 0)
+	{
+		process_stacks(st, pc, sorted);
+		print_arrays(st);
+	}
+	// printf("checking stack: %d\n", check_stacks(st));
 
+	// printf("checking stack: %d\n", check_stacks(st));
+	// process_stacks(st, pc, sorted);
+	// print_arrays(st);
 	
-	process_stacks(st, pc, sorted);
-	print_arrays(st);
+	// printf("checking stack: %d\n", check_stacks(st));
+	// process_stacks(st, pc, sorted);
+	// print_arrays(st);
+	
+	// printf("checking stack: %d\n", check_stacks(st));
+	// process_stacks(st, pc, sorted);
+	// print_arrays(st);
+	
+	// printf("checking stack: %d\n", check_stacks(st));
+	// process_stacks(st, pc, sorted);
+	// print_arrays(st);
+	
+	// printf("checking stack: %d\n", check_stacks(st));
+	// process_stacks(st, pc, sorted);
+	// print_arrays(st);
 
-	process_stacks(st, pc, sorted);
-	print_arrays(st);
+	// printf("checking stack: %d\n", check_stacks(st));
+	// process_stacks(st, pc, sorted);
+	// print_arrays(st);
+
+	// printf("checking stack: %d\n", check_stacks(st));
+	// process_stacks(st, pc, sorted);
+	// print_arrays(st);
+
+	// printf("checking stack: %d\n", check_stacks(st));
+	// process_stacks(st, pc, sorted);
+	// print_arrays(st);
+
+	// printf("checking stack: %d\n", check_stacks(st));
 
 	// print_piece(pc[0]);
 	// print_piece(pc[1]);

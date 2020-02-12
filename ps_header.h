@@ -42,6 +42,6 @@ void	reverse_rotate_both(t_stacks *st);
 void	action(t_stacks *st, char *act);
 //sort <= 4 elements
 void	sort_2_elements(t_stacks *st, t_info *pc0);
-void	sort_3_elements(t_stacks *st, t_info *pc0);
+void	sort_3_elements(t_stacks *st, t_info *pc0, int *srt);
 void	sort_4_elements(t_stacks *st, t_info *pc0);
 #endif
