@@ -95,255 +95,123 @@ void	pa_2_ss(t_stacks *st)
 	action(st, "ss");
 }
 
+void	sort_1_1(t_stacks *st, t_info *pc0, int *srt)
+{
+	if (st->a[st->pa] == srt[pc0->begin + 2])
+	{
+		// printf("LEGO\n");
+		action(st, "ra");
+		action(st, "pa");
+		action(st, "ra");
+	}
+	else if (st->b[st->pb + 1] == srt[pc0->begin + 2])
+	{
+	// printf("HJKO\n");
+		action(st, "pa");
+		action(st, "ra");
+		action(st, "ra");
+	}
+}
 
-void	sort_4_elements(t_stacks *st, t_info *pc0)
+
+void	sort_4_elements(t_stacks *st, t_info *pc0, int *srt)
 {
 	int k;
+	int flag;
 
 	k = 0;
-	printf("IN SORTING 4 ELEMENTS: lt = %c\n", pc0->lt);
+	// printf("IN SORTING 4 ELEMENTS: lt = %c\n", pc0->lt);
 	if (pc0->lt == 'A')
 	{
 		// printf("%d\n", st->a[st->pa]);
 		// printf("%d\n", st->a[st->pa + 1]);
 		// printf("%d\n", st->a[st->pa + 2]);
 		// printf("%d\n", st->a[st->pa + 3]);
-		if (st->a[st->pa] < st->a[st->pa + 1] &&
-			st->a[st->pa + 1] < st->a[st->pa + 2] &&
-			st->a[st->pa + 2] < st->a[st->pa + 3]) // 1 2 3 4
-		{ //was correct
-			// printf("THIS MAKES\n");
-			ra_2(st);
-			ra_2(st);
-		}
-		else if (st->a[st->pa] < st->a[st->pa + 1] &&
-		st->a[st->pa + 1] < st->a[st->pa + 3] &&
-		st->a[st->pa + 3] < st->a[st->pa + 2]) // 1 2 4 3
-		{ //was correct
-			// printf("DAR \n");
-			ra_2(st);
+		// printf("pc: begin = %d, end = %d\n", srt[pc0->begin], srt[pc0->end - 1]);
+	// print_piece(pc0[0]);
+	// print_piece(pc[1]);
+	// print_piece(pc[2]);
+		flag = 0;
+		// write(1, "HERE\n", 5);
+		if (st->a[st->pa + 1] == srt[pc0->begin])
 			action(st, "sa");
-			ra_2(st);
-		}
-		else if (st->a[st->pa] < st->a[st->pa + 2] &&
-			st->a[st->pa + 2] < st->a[st->pa + 1] &&
-			st->a[st->pa + 1] < st->a[st->pa + 3]) // 1 3 2 4
-		{ //was correct
-			// printf("TIR \n");
-			ra_sa(st);
-			ra_2(st);
+		if (st->a[st->pa] == srt[pc0->begin])
+		{
 			action(st, "ra");
+			flag = 10;
 		}
-		else if (st->a[st->pa] < st->a[st->pa + 2] && 
-			st->a[st->pa + 2] < st->a[st->pa + 3] &&
-			st->a[st->pa + 3] < st->a[st->pa + 1]) // 1 3 4 2
-		{ //corrected
-			// printf("DTOM \n");
-			ra_pb(st);
-			ra_2(st);
-			pa_ra(st);
-		}
-		else if (st->a[st->pa] < st->a[st->pa + 3] &&
-			st->a[st->pa + 3] < st->a[st->pa + 1] &&
-			st->a[st->pa + 1] < st->a[st->pa + 2]) // 1 4 2 3
-		{ //corrected
-			// printf("KLO \n");
-			ra_pb(st);
-			sa_ra(st);
-			pa_ra(st);
-			action(st, "ra");
-		}
-		else if (st->a[st->pa] < st->a[st->pa + 3] &&
-			st->a[st->pa + 3] < st->a[st->pa + 2] &&
-			st->a[st->pa + 2] < st->a[st->pa + 1]) // 1 4 3 2
-		{ //was correct
-			// printf("MKI \n");
-			ra_pb(st);
-			sa_ra(st);
-			action(st, "ra");
-			pa_ra(st);
-		}
-		else if (st->a[st->pa + 1] < st->a[st->pa] &&
-			st->a[st->pa] < st->a[st->pa + 2] &&
-			st->a[st->pa + 2] < st->a[st->pa + 3]) // 2 1 3 4
-		{ //was correct
-			// printf("BHAS \n");
+		else if (st->a[st->pa + 2] == srt[pc0->begin])
+		{
+			// printf("AHO \n");
+			action(st, "pb");
 			action(st, "sa");
-			ra_2(st);
-			ra_2(st);
-		}
-		else if (st->a[st->pa + 1] < st->a[st->pa] &&
-			st->a[st->pa] < st->a[st->pa + 3] &&
-			st->a[st->pa + 3] < st->a[st->pa + 2]) // 2 1 4 3
-		{//was correct
-			// printf("CKJA \n");
-			sa_ra(st);
-			ra_sa(st);
-			ra_2(st);
-		}
-		else if (st->a[st->pa + 1] < st->a[st->pa + 2] &&
-			st->a[st->pa + 2] < st->a[st->pa] &&
-			st->a[st->pa] < st->a[st->pa + 3]) // 2 3 1 4
-		{ //corrected
-			// printf("DOLL \n");
-			pb_ra(st);
-			ra_pa(st);
-			ra_2(st);
-		}
-		else if (st->a[st->pa + 1] < st->a[st->pa + 2] &&
-			st->a[st->pa + 2] < st->a[st->pa + 3] &&
-			st->a[st->pa + 3] < st->a[st->pa]) // 2 3 4 1
-		{ //corrected
-			// printf("HAND \n");
-			pb_ra(st);
-			ra_2(st);
-			pa_ra(st);
-		}
-		else if (st->a[st->pa + 1] < st->a[st->pa + 3] &&
-			st->a[st->pa + 3] < st->a[st->pa] &&
-			st->a[st->pa] < st->a[st->pa + 2]) // 2 4 1 3
-		{ //corrected
-			// printf("EAR \n");
-			pb_ra(st);
-			sa_ra(st);
-			pa_ra(st);
 			action(st, "ra");
+			// printf("NOW HERE: st->a[st->pa] = %d\n", st->a[st->pa]);
+			// printf("NOW HERE: st->a[st->pa + 1] = %d\n", st->a[st->pa + 1]);
+			// printf("NOW HERE: st->b[st->pb + 1] = %d\n", st->b[st->pb + 1]);
+			if (st->a[st->pa + 1] == srt[pc0->begin + 1])
+				action(st, "sa");
+			if (st->a[st->pa] == srt[pc0->begin + 1])
+			{
+				action(st, "ra");
+				sort_1_1(st, pc0, srt);
+			}
+			else if (st->b[st->pb + 1] == srt[pc0->begin + 1])
+			{
+			// printf("OEKL \n");
+				action(st, "pa");
+				action(st, "ra");
+				action(st, "ra");
+				action(st, "ra");
+			}
 		}
-		else if (st->a[st->pa + 1] < st->a[st->pa + 3] &&
-			st->a[st->pa + 3] < st->a[st->pa + 2] &&
-			st->a[st->pa + 2] < st->a[st->pa]) // 2 4 3 1
-		{//corrected
-			// printf("THOR \n");
-			pb_ra(st);
+		else if (st->a[st->pa + 3] == srt[pc0->begin])
+		{ // * * * 1
+			// printf("CULT \n");
+			// print_arrays(st);
+			action(st, "pb");
+			action(st, "pb");
 			action(st, "sa");
-			ra_2(st);
-			pa_ra(st);
-		}
-		else if (st->a[st->pa + 2] < st->a[st->pa] && 
-			st->a[st->pa] < st->a[st->pa + 1] &&
-			st->a[st->pa + 1] < st->a[st->pa + 3]) // 3 1 2 4
-		{ //corrected
-			// printf("MAN \n");
-			pb_sa(st);
-			ra_pa(st);
-			ra_2(st);
 			action(st, "ra");
+			// print_arrays(st);
+
+			if (st->a[st->pa] == srt[pc0->begin + 1])
+			{ //  2 | 1  * *  --> | 1 2   * * (take two elem from B)
+			// printf("STD\n");
+				action(st, "ra");
+				pc0->lt = 'B';
+				flag = 20;
+			}
+			else if (st->b[st->pb + 1] == srt[pc0->begin + 1])
+			{ //  * | 1    2 *  -->  * | 1 2    * *
+				// printf("GLA\n");
+				action(st, "pa");
+				action(st, "ra");
+				sort_1_1(st, pc0, srt);
+			}
+			else if (st->b[st->pb + 2] == srt[pc0->begin + 1])
+			{ //  * | 1     * 2 -->  * | 1 2  *  *
+				// printf("DAS\n");
+				action(st, "sb");
+				action(st, "pa");
+				action(st, "ra");
+				sort_1_1(st, pc0, srt);
+			}
 		}
-		else if (st->a[st->pa + 2] < st->a[st->pa] &&
-			st->a[st->pa] < st->a[st->pa + 3] &&
-			st->a[st->pa + 3] < st->a[st->pa + 1]) // 3 1 4 2
-		{ // corrected
-			// printf("WOW \n");
-			pb_sa(st);
-			ra_pa(st);
-			ra_sa(st);
-			ra_2(st);
+
+
+
+		if (flag == 10)
+		{
+			pc0->begin++;
+			pc0->amount--;
+			sort_3_elements(st, pc0, srt);
 		}
-		else if (st->a[st->pa + 2] < st->a[st->pa + 1] &&
-			st->a[st->pa + 1] < st->a[st->pa] &&
-			st->a[st->pa] < st->a[st->pa + 3]) // 3 2 1 4
-		{ //was coorect
-			// printf("WILL \n");
-			pb_sa(st);
-			ra_2(st);
-			action(st, "pa");
-			ra_2(st);
-		}
-		else if (st->a[st->pa + 2] < st->a[st->pa + 1] &&
-			st->a[st->pa + 1] < st->a[st->pa + 3] &&
-			st->a[st->pa + 3] < st->a[st->pa]) // 3 2 4 1
-		{ //corrected
-			// printf("PLAY \n");
-			pb_sa(st);
-			ra_2(st);
-			ra_pa(st);
-			action(st, "ra");
-		}
-		else if (st->a[st->pa + 2] < st->a[st->pa + 3] &&
-			st->a[st->pa + 3] < st->a[st->pa] &&
-			st->a[st->pa] < st->a[st->pa + 1]) // 3 4 1 2
-		{ //was right
-			// printf("STAY \n");
-			pb_sa(st);
-			ra_sa(st);
-			ra_pa(st);
-			ra_2(st);
-		}
-		else if (st->a[st->pa + 2] < st->a[st->pa + 3] &&
-			st->a[st->pa + 3] < st->a[st->pa + 1] &&
-			st->a[st->pa + 1] < st->a[st->pa]) // 3 4 2 1
-		{ //corrected
-			// printf("SILK \n");
-			pb_sa(st);
-			ra_sa(st);
-			ra_2(st);
-			pa_ra(st);
-		}
-		else if (st->a[st->pa + 3] < st->a[st->pa] && 
-			st->a[st->pa] < st->a[st->pa + 1] &&
-			st->a[st->pa + 1] < st->a[st->pa + 2]) // 4 1 2 3
-		{ //corrected
-			// printf("SLOW \n");
-			pb_2(st);
-			action(st, "ss");
-			ra_pa(st);
-			ra_pa(st);
-			ra_2(st);
-		}
-		else if (st->a[st->pa + 3] < st->a[st->pa] &&
-			st->a[st->pa] < st->a[st->pa + 2] &&
-			st->a[st->pa + 2] < st->a[st->pa + 1]) // 4 1 3 2
-		{ //corrected
-			// printf("FORC \n");
-			pb_2(st);
-			action(st, "ss");
-			ra_pa(st);
-			ra_2(st);
-			pa_ra(st);
-		}
-		else if (st->a[st->pa + 3] < st->a[st->pa + 1] &&
-			st->a[st->pa + 1] < st->a[st->pa] &&
-			st->a[st->pa] < st->a[st->pa + 2]) // 4 2 1 3
-		{ //corrected
-			// printf("FRAW \n");
-			pb_2(st);
-			sa_ra(st);
-			pa_ra(st);
-			pa_ra(st);
-			action(st, "ra");		
-		}
-		else if (st->a[st->pa + 3] < st->a[st->pa + 1] &&
-			st->a[st->pa + 1] < st->a[st->pa + 2] &&
-			st->a[st->pa + 2] < st->a[st->pa]) // 4 2 3 1
-		{ //was correct
-			// printf("LORS \n");
-			pb_2(st);
-			sa_ra(st);
-			pa_ra(st);
-			ra_pa(st);
-			action(st, "ra");
-		}
-		else if (st->a[st->pa + 3] < st->a[st->pa + 2] &&
-			st->a[st->pa + 2] < st->a[st->pa] &&
-			st->a[st->pa] < st->a[st->pa + 1]) // 4 3 1 2
-		{ //corrected
-			printf("SCAT \n");
-			pb_2(st);
-			action(st, "ss");
-			ra_2(st);
-			pa_ra(st);
-			pa_ra(st);
-		}
-		else if (st->a[st->pa + 3] < st->a[st->pa + 2] &&
-			st->a[st->pa + 2] < st->a[st->pa + 1] &&
-			st->a[st->pa + 1] < st->a[st->pa]) // 4 3 2 1
-		{ //was correct
-			// printf("OPF \n");
-			pb_2(st);
-			sa_ra(st);
-			ra_pa(st);
-			ra_pa(st);
-			action(st, "ra");
+		else if (flag == 20)
+		{
+			pc0->begin += 2;
+			pc0->amount -= 2;
+			sort_2_elements(st, pc0);
 		}
 	}
 	else if (pc0->lt == 'B')
@@ -387,7 +255,7 @@ void	sort_4_elements(t_stacks *st, t_info *pc0)
 		st->b[st->pb + 3] < st->b[st->pb + 4] &&
 		st->b[st->pb + 4] < st->b[st->pb + 2]) // 1 3 4 2
 		{ //поправил, проверил
-			printf("IN B YES\n");
+			// printf("IN B YES\n");
 			// pa_ra(st);
 			// pa_2(st);
 			// ra_pa(st);

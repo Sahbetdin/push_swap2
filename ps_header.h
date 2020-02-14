@@ -13,6 +13,7 @@ typedef struct	s_stacks
 	int			pa;
 	int			pb;
 	int			n;
+	int			oper;
 }				t_stacks;
 
 typedef struct	s_info
@@ -42,5 +43,8 @@ void	action(t_stacks *st, char *act);
 //sort <= 4 elements
 void	sort_2_elements(t_stacks *st, t_info *pc0);
 void	sort_3_elements(t_stacks *st, t_info *pc0, int *srt);
-void	sort_4_elements(t_stacks *st, t_info *pc0);
+void	sort_4_elements(t_stacks *st, t_info *pc0, int *srt);
+//printing
+void	print_piece(t_info piece0);
+void	print_arrays(t_stacks *st);
 #endif
