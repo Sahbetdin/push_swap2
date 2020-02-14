@@ -223,7 +223,7 @@ int main()
 	t_stacks	*st;
 	int			count;
 
-	n = 23; 
+	n = 35; 
 	pc = (t_info *)malloc(sizeof(t_info) * 100);
 	i = 0;
 	set_first_info(pc, n);
@@ -248,6 +248,16 @@ int main()
 	set_arr_to_zero(st->b, st->n);
 	set_arr_with_numbers(st->a, st->n);
 	sorted = make_me_sorted(st);
+	i = 0;
+	while (i < n - 1)
+	{
+		if (sorted[i] == sorted[i + 1])
+		{
+			write(1, "\033[0;31mError\n\033[0m", 17);
+			return (0);
+		}
+		i++;
+	}
 	print_arrays(st);
 
 	// 	push_1_to_2(st, 'A');
