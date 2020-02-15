@@ -17,7 +17,7 @@ void	sort_2_elements(t_stacks *st, t_info *pc0)
 	if (pc0->lt == 'A' && st->a[st->pa] < st->a[st->pa + 1])
 	{
 		action(st, "ra");
-		action(st, "ra");
+		action(st, "ra");		
 	}
 	else if (pc0->lt == 'A' && st->a[st->pa] > st->a[st->pa + 1])
 	{
