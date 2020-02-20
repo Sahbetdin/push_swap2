@@ -203,7 +203,7 @@ int		set_st_a(int ac, char **av, t_stacks **st, int **sorted)
 
 int set_st_b(t_stacks *st)
 {
-	st->b = (int *)malloc(sizeof(int) * st->n);
+	st->b = (int *)malloc(sizeof(int) * st->n); ///???????????????????????
 	set_arr_to_zero(st->b, st->n);
 	st->oper = 0;
 	st->pa = 0;
@@ -430,24 +430,24 @@ int main(int ac, char **av)
 	set_first_info(pc, st->n);
 
 
-	print_arrays(st);
+//	print_arrays(st);
 	process_stacks(st, pc, sorted);
-	print_piece(pc[0]);
-	print_piece(pc[1]);
-	print_piece(pc[2]);
-	print_arrays(st);
+//	print_piece(pc[0]);
+//	print_piece(pc[1]);
+	// print_piece(pc[2]);
+//	print_arrays(st);
 
-	process_stacks(st, pc, sorted);
-	print_piece(pc[0]);
-	print_piece(pc[1]);
-	print_piece(pc[2]);
-	print_arrays(st);
+	// process_stacks(st, pc, sorted);
+	// print_piece(pc[0]);
+	// print_piece(pc[1]);
+	// print_piece(pc[2]);
+	// print_arrays(st);
 
-	process_stacks(st, pc, sorted);
-	print_piece(pc[0]);
-	print_piece(pc[1]);
-	print_piece(pc[2]);
-	print_arrays(st);
+	// process_stacks(st, pc, sorted);
+	// print_piece(pc[0]);
+	// print_piece(pc[1]);
+	// print_piece(pc[2]);
+	// print_arrays(st);
 
 	// process_stacks(st, pc, sorted);
 	// print_piece(pc[0]);

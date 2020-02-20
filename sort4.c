@@ -119,6 +119,13 @@ void	sort_4_elements(t_stacks *st, t_info *pc0, int *srt)
 	int k;
 	int flag;
 
+//переделать . чтобы обрабатывался пустой стэк, в который переношу (обычно А!)
+
+
+
+
+
+////
 	k = 0;
 	// printf("IN SORTING 4 ELEMENTS: lt = %c\n", pc0->lt);
 	if (pc0->lt == 'A')
@@ -132,10 +139,9 @@ void	sort_4_elements(t_stacks *st, t_info *pc0, int *srt)
 	// print_piece(pc[1]);
 	// print_piece(pc[2]);
 		flag = 0;
-		// write(1, "HERE\n", 5);
 		if (st->a[st->pa + 1] == srt[pc0->begin])
 			action(st, "sa");
-		if (st->a[st->pa] == srt[pc0->begin])
+		if (st->a[st->pa] == srt[pc0->begin] && pc0->amount + st->pa != st->n)
 		{
 			action(st, "ra");
 			flag = 10;
