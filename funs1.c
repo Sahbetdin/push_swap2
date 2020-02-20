@@ -61,15 +61,8 @@ int		*sort_array(int *arr, int n)
 	return (arr);
 }
 
-void	set_arr_to_zero(int *b, int n)
-{
-	int i;
-	i = -1;
-	while (++i < n)
-		b[i] = 0;
-}
 
-void	set_arr_with_numbers(int *a, int n)
+void	set_arr_with_numbers(int *a)
 {
 	//17 чисел
 	// a[0] = 15; a[1] = 21; a[2] = 23; 

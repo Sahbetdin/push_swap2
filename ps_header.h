@@ -7,6 +7,8 @@
 #include <unistd.h>
 #include "./my_libft/libft.h"
 
+#define INT_MIN -2147483648
+#define INT_MAX 2147483647
 
 typedef struct	s_stacks
 {
@@ -27,11 +29,12 @@ typedef struct	s_info
 }				t_info;
 
 void	set_arr_to_zero(int *b, int n);
-void	set_arr_with_numbers(int *a, int n);
+void	set_arr_with_numbers(int *a);
+void	set_first_info(t_info *pc, int n);
 int		*sort_array(int *arr, int n);
 //library functions
 void    ft_swap(int *a, int *b);
-int     ft_memcmp(const void *s1, const void *s2, size_t n);
+// int     ft_memcmp(const void *s1, const void *s2, size_t n);
 //operations
 void	swap_in_stack(t_stacks *st, char c);
 void	swap_both(t_stacks *st);
@@ -49,4 +52,10 @@ void	sort_4_elements(t_stacks *st, t_info *pc0, int *srt);
 //printing
 void	print_piece(t_info piece0);
 void	print_arrays(t_stacks *st);
+void	print_sorted(int *srt, int n);
+
+//in ps.c
+void	process_stacks(t_stacks *st, t_info *pc, int *sorted);
+void	divide_piece_info(t_info *pc, int flag);
+int		check_stacks(t_stacks *st);
 #endif

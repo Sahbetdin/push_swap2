@@ -101,5 +101,5 @@ void	sort_3_elements(t_stacks *st, t_info *pc0, int *srt)
 	pc0->amount = 0;
 }
 
-
+//gcc parse_args.c ft_atoi_backsp.c funs1.c ps.c sort2.c sort3.c sort4.c fun_print.c -o push_swap my_libft/libft.a
 //gcc ps.c funs1.c sort4.c sort2.c sort3.c  && ./a.out
