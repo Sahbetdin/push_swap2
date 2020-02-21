@@ -29,7 +29,6 @@ typedef struct	s_info
 }				t_info;
 
 void	set_arr_to_zero(int *b, int n);
-void	set_arr_with_numbers(int *a);
 void	set_first_info(t_info *pc, int n);
 int		*sort_array(int *arr, int n);
 //library functions
@@ -51,6 +50,7 @@ void	sort_1_1(t_stacks *st, t_info *pc0, int *srt);
 void	sort_2_elements(t_stacks *st, t_info *pc0);
 void	sort_3_elements(t_stacks *st, t_info *pc0, int *srt);
 void	sort_4_elements(t_stacks *st, t_info *pc0, int *srt);
+void	sort_top_top(t_stacks *st);
 //printing
 void	print_piece(t_info piece0);
 void	print_arrays(t_stacks *st);

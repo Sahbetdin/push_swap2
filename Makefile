@@ -1,6 +1,6 @@
 NAME = push_swap
 
-SRC = ps.c funs1.c sort2.c sort3.c sort4.c
+SRC = parse_args.c ft_atoi_backsp.c funs1.c ps.c sort2.c sort3.c sort4.c fun_print.c
 
 OBJECTS = $(patsubst %.c, %.o, $(SRC))
 
@@ -27,7 +27,7 @@ $(LIBFT):
 		@$(MAKE) -C $(LIBFT_PATH)
 
 test:	all
-		@./push_swap test
+#		@./push_swap test
 
 clean:
 		@/bin/rm -f *.o

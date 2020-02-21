@@ -67,8 +67,14 @@ int	check_stacks(t_stacks *st)
 	i = 0;
 	while (i < st->n - 1)
 	{
+		// printf("diff = %d\n", st->a[i] > st->a[i - 1]);
 		if (st->a[i] > st->a[i + 1])
+		{
+			// printf("st->a[i] = %d\n", st->a[i]);
+			// printf("st->a[i + 1] = %d\n", st->a[i + 1]);
+			// printf("NOW i = %d!\n", i);
 			return (0);
+		}
 		i++;
 	}
 	return (1);
@@ -108,7 +114,6 @@ int	check_stacks(t_stacks *st)
 // 	st->pb = n - 1;
 
 // 	set_arr_to_zero(st->b, st->n);
-// 	set_arr_with_numbers(st->a, st->n);
 // 	sorted = make_me_sorted(st);
 
 // 	// i = 0;
