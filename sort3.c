@@ -31,7 +31,7 @@ void	sort_top_top(t_stacks *st)
 
 void	sort_3_elements(t_stacks *st, t_info *pc0, int *srt)
 {
-	printf("NOW WE SORT 3 ELEMENTS\n");
+	// printf("NOW WE SORT 3 ELEMENTS\n");
 	// printf("begin %d\n", srt[pc0->begin]);
 	// printf("end  %d\n", srt[pc0->end - 1]);
 	// printf("lt  %c\n", pc0->lt);

@@ -118,7 +118,7 @@ void	sort_4_elements(t_stacks *st, t_info *pc0, int *srt)
 {
 	int k;
 	int flag;
-	printf("IN SORTING 4 ELEMENTS: lt = %c\n", pc0->lt);
+	// printf("IN SORTING 4 ELEMENTS: lt = %c\n", pc0->lt);
 
 //переделать . чтобы обрабатывался пустой стэк, в который переношу (обычно А!)
 
@@ -152,10 +152,10 @@ void	sort_4_elements(t_stacks *st, t_info *pc0, int *srt)
 			action(st, "pb");
 			action(st, "sa");
 			action(st, "ra");
-			printf("NOW HERE: st->a[st->pa] = %d\n", st->a[st->pa]);
-			printf("NOW HERE: st->a[st->pa + 1] = %d\n", st->a[st->pa + 1]);
-			printf("NOW HERE: st->b[st->pb + 1] = %d\n", st->b[st->pb + 1]);
-			printf("NOW HERE: srt[pc0->begin + 1] = %d\n", srt[pc0->begin + 1]);
+			// printf("NOW HERE: st->a[st->pa] = %d\n", st->a[st->pa]);
+			// printf("NOW HERE: st->a[st->pa + 1] = %d\n", st->a[st->pa + 1]);
+			// printf("NOW HERE: st->b[st->pb + 1] = %d\n", st->b[st->pb + 1]);
+			// printf("NOW HERE: srt[pc0->begin + 1] = %d\n", srt[pc0->begin + 1]);
 
 			if (st->a[st->pa + 1] == srt[pc0->begin + 1])
 				action(st, "sa");

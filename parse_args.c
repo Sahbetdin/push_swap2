@@ -326,6 +326,7 @@ void	process_stacks(t_stacks *st, t_info *pc, int *sorted)
 		j = 0;
 		while (j < count && k < need_to_push)
 		{
+
 			// write(1, "R\n", 2);
 			if (pc[i].lt == 'A')
 			{
@@ -462,112 +463,116 @@ int main(int ac, char **av)
 	pc = (t_info *)malloc(sizeof(t_info) * 100);
 	set_first_info(pc, st->n);
 
-	print_sorted(sorted, st->n);
-	print_arrays(st);
+	// print_sorted(sorted, st->n);
+	// print_arrays(st);
 
-	process_stacks(st, pc, sorted);
-	print_arrays(st);
+	// process_stacks(st, pc, sorted);
+	// print_arrays(st);
 
-	process_stacks(st, pc, sorted);
-	print_arrays(st);
+	// process_stacks(st, pc, sorted);
+	// print_arrays(st);
 
-	process_stacks(st, pc, sorted);
-	print_arrays(st);
+	// process_stacks(st, pc, sorted);
+	// print_arrays(st);
 
-	process_stacks(st, pc, sorted);
-	print_arrays(st);
+	// process_stacks(st, pc, sorted);
+	// print_arrays(st);
 
-	process_stacks(st, pc, sorted);
-	print_arrays(st);
+	// process_stacks(st, pc, sorted);
+	// print_arrays(st);
 
-	process_stacks(st, pc, sorted);
-	print_arrays(st);
+	// process_stacks(st, pc, sorted);
+	// print_arrays(st);
 
-	process_stacks(st, pc, sorted);
-	print_arrays(st);
+	// process_stacks(st, pc, sorted);
+	// print_arrays(st);
 
-	process_stacks(st, pc, sorted);
-	print_arrays(st);
-
-
-	process_stacks(st, pc, sorted);
-	print_arrays(st);
-
-	process_stacks(st, pc, sorted);
-	print_arrays(st);
-
-	process_stacks(st, pc, sorted);
-	print_arrays(st);
-
-	process_stacks(st, pc, sorted);
-	print_arrays(st);
+	// process_stacks(st, pc, sorted);
+	// print_arrays(st);
 
 
-	process_stacks(st, pc, sorted);
-	print_arrays(st);
+	// process_stacks(st, pc, sorted);
+	// print_arrays(st);
 
-	process_stacks(st, pc, sorted);
-	print_arrays(st);
+	// process_stacks(st, pc, sorted);
+	// print_arrays(st);
 
-	process_stacks(st, pc, sorted);
-	print_arrays(st);
+	// process_stacks(st, pc, sorted);
+	// print_arrays(st);
 
-	process_stacks(st, pc, sorted);
-	print_arrays(st);
-
-	process_stacks(st, pc, sorted);
-	print_arrays(st);
+	// process_stacks(st, pc, sorted);
+	// print_arrays(st);
 
 
-	process_stacks(st, pc, sorted);
-	print_arrays(st);
+	// process_stacks(st, pc, sorted);
+	// print_arrays(st);
 
-	process_stacks(st, pc, sorted);
-	print_arrays(st);
+	// process_stacks(st, pc, sorted);
+	// print_arrays(st);
 
-	process_stacks(st, pc, sorted);
-	print_arrays(st);
+	// process_stacks(st, pc, sorted);
+	// print_arrays(st);
 
-	process_stacks(st, pc, sorted);
-	print_arrays(st);
+	// process_stacks(st, pc, sorted);
+	// print_arrays(st);
 
-	process_stacks(st, pc, sorted);
-	print_arrays(st);
-
-	process_stacks(st, pc, sorted);
-	print_arrays(st);
+	// process_stacks(st, pc, sorted);
+	// print_arrays(st);
 
 
-	process_stacks(st, pc, sorted);
-	print_arrays(st);
+	// process_stacks(st, pc, sorted);
+	// print_arrays(st);
 
-	process_stacks(st, pc, sorted);
-	print_arrays(st);
+	// process_stacks(st, pc, sorted);
+	// print_arrays(st);
 
-	process_stacks(st, pc, sorted);
-	print_arrays(st);
+	// process_stacks(st, pc, sorted);
+	// print_arrays(st);
 
-	process_stacks(st, pc, sorted);
-	print_arrays(st);
+	// process_stacks(st, pc, sorted);
+	// print_arrays(st);
 
-	process_stacks(st, pc, sorted);
-	print_arrays(st);
+	// process_stacks(st, pc, sorted);
+	// print_arrays(st);
 
-	process_stacks(st, pc, sorted);
-	print_arrays(st);
-
-	process_stacks(st, pc, sorted);
-	print_arrays(st);
+	// process_stacks(st, pc, sorted);
+	// print_arrays(st);
 
 
-	process_stacks(st, pc, sorted);
-	print_arrays(st);
+	// process_stacks(st, pc, sorted);
+	// print_arrays(st);
 
-	process_stacks(st, pc, sorted);
-	print_arrays(st);
+	// process_stacks(st, pc, sorted);
+	// print_arrays(st);
 
-	process_stacks(st, pc, sorted);
-	print_arrays(st);
+	// process_stacks(st, pc, sorted);
+	// print_arrays(st);
+
+	// process_stacks(st, pc, sorted);
+	// print_arrays(st);
+
+	// process_stacks(st, pc, sorted);
+	// print_arrays(st);
+
+	// process_stacks(st, pc, sorted);
+	// print_arrays(st);
+
+	// process_stacks(st, pc, sorted);
+	// print_arrays(st);
+
+
+	// process_stacks(st, pc, sorted);
+	// print_arrays(st);
+
+	// process_stacks(st, pc, sorted);
+	// print_arrays(st);
+
+	// process_stacks(st, pc, sorted);
+	// print_arrays(st);
+
+
+/////////
+
 
 	// process_stacks(st, pc, sorted);
 	// print_arrays(st);
@@ -603,10 +608,10 @@ int main(int ac, char **av)
 
 
 
-	// while (check_stacks(st) == 0)
-	// {
-	// 	process_stacks(st, pc, sorted);
-	// }
+	while (check_stacks(st) == 0)
+	{
+		process_stacks(st, pc, sorted);
+	}
 	// print_arrays(st);
 
 
