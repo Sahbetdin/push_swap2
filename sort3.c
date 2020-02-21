@@ -31,7 +31,7 @@ void	sort_top_top(t_stacks *st)
 
 void	sort_3_elements(t_stacks *st, t_info *pc0, int *srt)
 {
-	// printf("NOW WE SORT 3 ELEMENTS\n");
+	printf("NOW WE SORT 3 ELEMENTS\n");
 	// printf("begin %d\n", srt[pc0->begin]);
 	// printf("end  %d\n", srt[pc0->end - 1]);
 	// printf("lt  %c\n", pc0->lt);
@@ -141,10 +141,12 @@ void	sort_3_elements(t_stacks *st, t_info *pc0, int *srt)
 		}
 		else if (st->b[st->pb + 2] == srt[pc0->begin])
 		{ // B: * 1 *
+
 			action(st, "pa");
 			action(st, "pa");
 			action(st, "ra");
-			sort_2_elements(st, pc0);
+			printf("MAYBE HERE\n");
+			sort_top_top(st);
 		}
 		else if (st->b[st->pb + 3] == srt[pc0->begin])
 		{ // B: * * 1
@@ -152,7 +154,7 @@ void	sort_3_elements(t_stacks *st, t_info *pc0, int *srt)
 			action(st, "pa");
 			action(st, "pa");
 			action(st, "ra");
-			sort_2_elements(st, pc0);
+			sort_top_top(st);
 		}
 	}
 	pc0->lt = 0;

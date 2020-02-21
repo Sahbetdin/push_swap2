@@ -223,12 +223,13 @@ void	process_stacks(t_stacks *st, t_info *pc, int *sorted)
 	int need_to_push;
 	int k; //we push to another stack until k == need_to_push
 	int flag;
+	int flag1;
 	int last;
 	int ii; //чтобы искать i для в другом стеке
 
 	i = 0;
 	while (i < 100)
-	{
+	{ //ищем текущий pc, который мы далее будем разбивать
 		if (pc[i].amount != 0 && pc[i + 1].amount == 0)
 			break;
 		i++;
@@ -238,15 +239,40 @@ void	process_stacks(t_stacks *st, t_info *pc, int *sorted)
 	{
 		count = pc[i].amount;
 
-		flag = 1;
+		flag = 1; //отвечает, что в тек стеке мы будем вовр элем обратно
+		//если весь pc помещается в стек, то не будем. Иначе, если в нем
+		//как минимум еще один pc, который под текущим pc, то надо возвращать.
 
-		if (pc[i].lt == 'A')
-			last = st->a[st->n - 1];
-		else if (pc[i].lt == 'B')
-			last = st->b[st->n - 1];
-		if (last >= sorted[pc[i].begin] && last <= sorted[pc[i].end - 1])
+//способ 1:
+		// if (pc[i].lt == 'A')
+		// 	last = st->a[st->n - 1];
+		// else if (pc[i].lt == 'B')
+		// 	last = st->b[st->n - 1];
+		// if (last >= sorted[pc[i].begin] && last <= sorted[pc[i].end - 1])
+		// 	flag = 0;
+		// printf("last = %d, flag = %d\n", last, flag);
+//способ 2:
+		printf("this pc[i].amount we process: %d\n", pc[i].amount);
+		if (pc[i].lt == 'A' && st->pa + pc[i].amount == st->n) //??  -1 ??
 			flag = 0;
-		printf("last = %d, flag = %d\n", last, flag);
+		else if (pc[i].lt == 'B' && st->pb + pc[i].amount + 1 == st->n)
+			flag = 0;
+		printf("flag = %d\n", flag);
+
+
+		if (st->pb + 1 == st->n) //значит В пустой
+			flag1 = 1;
+		else
+			flag1 = 0;
+		printf("flag1 = %d\n", flag1);
+		// print_piece(pc[i]);
+		// printf("st->pa = %d\n", st->pa);
+		// printf("st->pb = %d\n", st->pb);
+		// printf("st->n = %d\n", st->n);
+		// printf("st->pa + pc[i].amount = %d\n", st->pa + pc[i].amount);
+		// printf("st->pb + pc[i].amount = %d\n", st->pb + pc[i].amount);
+
+
 
 		// if (pc[i].lt == 'A')
 		// 	printf("st->a[st->pa +amount] = %d\n", st->a[st->pa + pc[i + 1].amount]);
@@ -263,36 +289,26 @@ void	process_stacks(t_stacks *st, t_info *pc, int *sorted)
 		// printf("flag = %d\n", flag);
 
 		divide_piece_info(pc + i, 1);
-		if (pc[i + 1].amount > 3)
+		if (pc[i + 1].amount > 3 && flag1) //если стэк В пустой и кол-во элементов, которе
+			//нужно "ra" делать, более 3
+		{
 			divide_piece_info(pc + i + 1, 0);
+			need_to_push = pc[i + 1].amount + pc[i + 2].amount;
+		}
+		else
+			need_to_push = pc[i + 1].amount;
+
 		// print_piece(pc[i]);
 		// print_piece(pc[i + 1]);
 		// print_piece(pc[i + 2]);
-
-		
-
-		need_to_push = pc[i + 1].amount + pc[i + 2].amount;
-		// printf("here\n");
-
-		// print_piece(pc[i]);
-		// print_piece(pc[i + 1]);
 		// printf("here\n");
 		// printf("need_to_push = %d\n", need_to_push);
-		// print_piece(pc[i + 1]);
-
-		// if (pc[i].lt == 'A')
-		// 	count = st->n - st->pa;
-		// else if (pc[i].lt == 'B')
-		// 	count = st->n - st->pb - 1;
-
-		// printf("count = %d\n", count);
-		j = 0;
 		// printf("%d %d\n", sorted[pc[i].begin] , sorted[pc[i].end]);
 		// printf("%d %d\n", sorted[pc[i + 1].begin], sorted[pc[i + 1].end]);
-		printf("%d %d\n", sorted[pc[i + 2].begin], sorted[pc[i + 2].end]);
+		// printf("%d %d\n", sorted[pc[i + 2].begin], sorted[pc[i + 2].end]);
 		rot_cnt = 0; //rotations count
 		k = 0;
-
+		j = 0;
 		while (j < count && k < need_to_push)
 		{
 			// write(1, "R\n", 2);
@@ -303,14 +319,16 @@ void	process_stacks(t_stacks *st, t_info *pc, int *sorted)
 				// 	action(st, "ss");
 
 				// printf("st->a[st->pa] = %d\n", st->a[st->pa]);
-				if (st->a[st->pa] >= sorted[pc[i + 2].begin] &&
-					st->a[st->pa] < sorted[pc[i + 1].end])
+				if ((flag1 && st->a[st->pa] >= sorted[pc[i + 2].begin] &&
+					st->a[st->pa] < sorted[pc[i + 1].end]) ||
+					(!flag1 && st->a[st->pa] >= sorted[pc[i + 1].begin] &&
+					st->a[st->pa] < sorted[pc[i + 1].end]))
 				{
 					action(st, "pb");
 					// printf("st->pb = %d, n = %d\n", st->pb, st->n);
-					// if (!(st->b[st->pb + 1] >= sorted[pc[i + 2].begin] &&
-					// 	st->b[st->pb + 1] < sorted[pc[i + 2].end]) && st->pb < st->n - 3 && flag == 1)
-					// 	action(st, "rb");
+					if (flag1 && !(st->b[st->pb + 1] >= sorted[pc[i + 2].begin] &&
+					 	st->b[st->pb + 1] < sorted[pc[i + 2].end]) && st->pb < st->n - 3)
+						action(st, "rb");
 					k++;		
 				}
 				else
@@ -430,24 +448,34 @@ int main(int ac, char **av)
 	set_first_info(pc, st->n);
 
 
-//	print_arrays(st);
+	print_arrays(st);
 	process_stacks(st, pc, sorted);
-//	print_piece(pc[0]);
-//	print_piece(pc[1]);
-	// print_piece(pc[2]);
-//	print_arrays(st);
-
-	// process_stacks(st, pc, sorted);
 	// print_piece(pc[0]);
 	// print_piece(pc[1]);
 	// print_piece(pc[2]);
-	// print_arrays(st);
+	print_arrays(st);
 
-	// process_stacks(st, pc, sorted);
-	// print_piece(pc[0]);
-	// print_piece(pc[1]);
-	// print_piece(pc[2]);
-	// print_arrays(st);
+	process_stacks(st, pc, sorted);
+	print_arrays(st);
+
+	process_stacks(st, pc, sorted);
+	print_arrays(st);
+
+	process_stacks(st, pc, sorted);
+	print_arrays(st);
+
+	process_stacks(st, pc, sorted);
+	print_arrays(st);
+
+	process_stacks(st, pc, sorted);
+	print_arrays(st);
+
+	process_stacks(st, pc, sorted);
+	print_piece(pc[0]);
+	print_piece(pc[1]);
+	print_piece(pc[2]);
+	print_arrays(st);
+
 
 	// process_stacks(st, pc, sorted);
 	// print_piece(pc[0]);
