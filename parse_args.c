@@ -12,7 +12,6 @@
 
 #include "ps_header.h"
 
-char	*ft_atoi_backsp(const char *str, int *p_numb, int *n);
 
 int		free_st_a_overflaw(t_stacks *st)
 {
@@ -32,7 +31,7 @@ int		free_st_a_dupl(t_stacks *st)
 	return (-3);
 }
 
-int	*make_me_sorted(t_stacks *st)
+int		*make_me_sorted(t_stacks *st)
 {
 	int *sorted;
 	int i;
@@ -45,59 +44,13 @@ int	*make_me_sorted(t_stacks *st)
 	return (sorted);
 }
 
-/*
-** returns 0 if non-numerical characters or not-backspace found
-** otherwise returns 1
-*/
-
-int check_if_num_backsp(int ac, char **av)
-{
-	int i;
-	int j;
-
-	i = 1;
-	while (i < ac)
-	{
-		j = 0;
-		while (av[i][j] != '\0')
-		{
-			if (!((av[i][j] >= '0' && av[i][j] <= '9') || av[i][j] == ' '))
-				return (0);
-			j++;
-		}
-		i++;
-	}
-	return (1);
-}
 
 
 /*
-** check for duplicates in input
-** if duplicates found return -3
-** otherwise, if all is good return 1
+** returns amount of numbers in av[i]
 */
 
-int		check_if_dupl(t_stacks *st, int **srt)
-{
-	int		*sorted;
-	int		j;
-
-	*srt = make_me_sorted(st);
-	j = 0;
-	while (j < st->n - 1)
-	{
-		if ((*srt)[j] == (*srt)[j + 1])
-			return (free_st_a_dupl(st));
-		j++;
-	}
-	return (1);
-}
-
-/*
-** amount of numbers in av[i]
-*/
-
-int amount_of_numb_in_one_av(char *str)
+int		amount_of_numb_in_one_av(char *str)
 {
 	int flag;
 	char *trimi;
@@ -125,7 +78,11 @@ int amount_of_numb_in_one_av(char *str)
 	return(amount_in_one);
 }
 
-int amount_of_numb(int ac, char **av)
+/*
+** returns total amount of numbers
+*/
+
+int		amount_of_numb(int ac, char **av)
 {
 	int i;
 	int curr;
@@ -145,7 +102,7 @@ int amount_of_numb(int ac, char **av)
 }
 
 
-int parse_all_args(t_stacks *st, char *ptr, int *j_addr, int *n_addr)
+int		parse_all_args(t_stacks *st, char *ptr, int *j_addr, int *n_addr)
 {
 	if (ft_strchr(ptr, ' '))
 	{
@@ -167,62 +124,32 @@ int parse_all_args(t_stacks *st, char *ptr, int *j_addr, int *n_addr)
 	return (1);
 }
 
-void	set_arr_to_zero(int *b, int n)
+/*
+** is pushed to B
+*/
+int		is_pb(t_stacks *st, t_info *pc0, int *srt, int fl)
 {
-	int i;
-	i = -1;
-	while (++i < n)
-		b[i] = 0;
+	int tmp;
+	int res;
+
+	res = 0;
+	tmp = st->a[st->pa];
+	if ((fl && tmp >= srt[pc0[2].begin] && tmp < srt[pc0[1].end]) ||
+	(!fl && tmp >= srt[pc0[1].begin] && tmp < srt[pc0[1].end]))
+		res = 1;
+	return (res);
 }
 
-
-int		set_st_a(int ac, char **av, t_stacks **st, int **sorted)
+void	check_first_element(t_stacks *st, t_info *pc0, int *sorted)
 {
-	int i;
-	int j;
-	int cnt; //arg length
-	int n;
-	char *trimi;
-
-//check if input consists of numbers and backspaces
-	if (check_if_num_backsp(ac, av) == 0)
-		return (-1);
-//number of available arguments
-	if (!(*st = (t_stacks *)malloc(sizeof(t_stacks))))
-		return (0);
-	if ((cnt = amount_of_numb(ac, av)) != -1)
-		(*st)->n = cnt;
-	else
-		return (0);
-	if (!((*st)->a = (int *)malloc(sizeof(int) * (*st)->n)))
-		return (0);
-//parse arguments
-	i = 1;
-	j = 0;
-	while (i < ac)
+	if (pc0->lt == 'A' && st->a[st->pa] == sorted[pc0->begin] && st->pa + 
+		pc0->amount != st->n)
 	{
-		trimi = ft_strtrim(av[i]);
-		if (parse_all_args((*st), trimi, &j, &n) == -2)
-			return (-2);
-		i++;
-		free(trimi);
+		action(st, "ra", 1);
+		pc0->begin++;
+		pc0->amount--;
 	}
-	if (check_if_dupl(*st, sorted) == -3)
-		return (-3);
-	return (1);
 }
-
-
-int set_st_b(t_stacks *st)
-{
-	st->b = (int *)malloc(sizeof(int) * st->n); ///???????????????????????
-	set_arr_to_zero(st->b, st->n);
-	st->oper = 0;
-	st->pa = 0;
-	st->pb = st->n - 1;
-	return (1);
-}
-
 
 
 void	process_stacks(t_stacks *st, t_info *pc, int *sorted)
@@ -238,8 +165,15 @@ void	process_stacks(t_stacks *st, t_info *pc, int *sorted)
 	int flag1;
 	int last;
 	int ii; //чтобы искать i для в другом стеке
+	int tmp1;
+	int tmp2;
 
-	i = 0;
+	// if (pc[-1].lt == 'A' || pc[-1].lt == 'B')
+	// 	printf("    HERE\n");
+	// else
+		// printf("NOT HERE\n");
+
+	i = 1;
 	while (i < 100)
 	{ //ищем текущий pc, который мы далее будем разбивать
 		if (pc[i].amount != 0 && pc[i + 1].amount == 0)
@@ -271,6 +205,10 @@ void	process_stacks(t_stacks *st, t_info *pc, int *sorted)
 			flag = 0;
 		// printf("flag = %d\n", flag);
 
+///
+		//убираем если первый элемент есть минимальный в куске
+		check_first_element(st, pc + i, sorted);
+///
 
 		if (st->pb + 1 == st->n) //значит В пустой
 			flag1 = 1;
@@ -335,21 +273,25 @@ void	process_stacks(t_stacks *st, t_info *pc, int *sorted)
 				// 	action(st, "ss");
 
 				// printf("st->a[st->pa] = %d\n", st->a[st->pa]);
-				if ((flag1 && st->a[st->pa] >= sorted[pc[i + 2].begin] &&
-					st->a[st->pa] < sorted[pc[i + 1].end]) ||
-					(!flag1 && st->a[st->pa] >= sorted[pc[i + 1].begin] &&
-					st->a[st->pa] < sorted[pc[i + 1].end]))
+				if (is_pb(st, pc + i, sorted, flag1))
 				{
-					action(st, "pb");
+					action(st, "pb", 1);
 					// printf("st->pb = %d, n = %d\n", st->pb, st->n);
-					if (flag1 && !(st->b[st->pb + 1] >= sorted[pc[i + 2].begin] &&
-					 	st->b[st->pb + 1] < sorted[pc[i + 2].end]) && st->pb < st->n - 2)
-						action(st, "rb");
+					tmp2 = st->b[st->pb + 1];
+					tmp2 = flag1 && !(tmp2 >= sorted[pc[i + 2].begin] &&
+					 	tmp2 < sorted[pc[i + 2].end]) && st->pb < st->n - 2;
+					if (tmp2 && !is_pb(st, pc + i,sorted, flag1))
+					{
+						action(st, "rr", 1);
+						rot_cnt++;
+					}
+					else if (tmp2)
+						action(st, "rb", 1);
 					k++;		
 				}
 				else
 				{
-					action(st, "ra");
+					action(st, "ra", 1);
 					rot_cnt++;
 				}
 				// write(1, "R\n", 2);
@@ -368,7 +310,7 @@ void	process_stacks(t_stacks *st, t_info *pc, int *sorted)
 					st->b[st->pb + 1] < sorted[pc[i + 1].end])
 				{
 					k++;
-					action(st, "pa");
+					action(st, "pa", 1);
 					// if (!(st->a[st->pa] >= sorted[pc[i + 2].begin] &&
 					// 	st->a[st->pa] < sorted[pc[i + 2].end] && st->pa < st->n - 1 && flag == 1))
 					// 	action(st, "ra");
@@ -376,7 +318,8 @@ void	process_stacks(t_stacks *st, t_info *pc, int *sorted)
 				}
 				else
 				{
-					action(st, "rb");
+
+					action(st, "rb", 1);
 					rot_cnt++;
 				}
 			}
@@ -406,9 +349,9 @@ void	process_stacks(t_stacks *st, t_info *pc, int *sorted)
 		{
 
 			if (pc[i].lt == 'A')
-				action(st, "rra");
+				action(st, "rra", 1);
 			else if (pc[i].lt == 'B')
-				action(st, "rrb");
+				action(st, "rrb", 1);
 			rot_cnt--;
 		}
 
@@ -432,197 +375,3 @@ void	process_stacks(t_stacks *st, t_info *pc, int *sorted)
 
 
 
-int main(int ac, char **av)
-{
-	int			i;
-	t_stacks	*st;
-	int			*sorted;
-
-	st = NULL;
-	if (ac == 1)
-		return (0);
-	i = set_st_a(ac, av, &st, &sorted);
-	// printf("n = %d\n", st->n);
-	if (i == 0)
-		write(1, "\033[1;31mMalloc error\n\033[0m", 24);
-	else if (i == -1)
-		write(1, "\033[1;31mNo numerical input\n\033[0m", 31);
-	else if (i == -2)
-		write(1, "\033[1;31mInteger overflaw\n\033[0m", 28);
-	else if (i == -3)
-		write(1, "\033[1;31mDuplicates found\n\033[0m", 28);
-	if (i == 0 || i == -1 || i == -2 || i == -3)
-		return (0);
-	set_st_b(st);
-
-	// print_sorted(sorted, st->n);
-
-	t_info *pc;
-	int n;
-	n = 100; 
-	pc = (t_info *)malloc(sizeof(t_info) * 100);
-	set_first_info(pc, st->n);
-
-	// print_sorted(sorted, st->n);
-	// print_arrays(st);
-
-	// process_stacks(st, pc, sorted);
-	// print_arrays(st);
-
-	// process_stacks(st, pc, sorted);
-	// print_arrays(st);
-
-	// process_stacks(st, pc, sorted);
-	// print_arrays(st);
-
-	// process_stacks(st, pc, sorted);
-	// print_arrays(st);
-
-	// process_stacks(st, pc, sorted);
-	// print_arrays(st);
-
-	// process_stacks(st, pc, sorted);
-	// print_arrays(st);
-
-	// process_stacks(st, pc, sorted);
-	// print_arrays(st);
-
-	// process_stacks(st, pc, sorted);
-	// print_arrays(st);
-
-
-	// process_stacks(st, pc, sorted);
-	// print_arrays(st);
-
-	// process_stacks(st, pc, sorted);
-	// print_arrays(st);
-
-	// process_stacks(st, pc, sorted);
-	// print_arrays(st);
-
-	// process_stacks(st, pc, sorted);
-	// print_arrays(st);
-
-
-	// process_stacks(st, pc, sorted);
-	// print_arrays(st);
-
-	// process_stacks(st, pc, sorted);
-	// print_arrays(st);
-
-	// process_stacks(st, pc, sorted);
-	// print_arrays(st);
-
-	// process_stacks(st, pc, sorted);
-	// print_arrays(st);
-
-	// process_stacks(st, pc, sorted);
-	// print_arrays(st);
-
-
-	// process_stacks(st, pc, sorted);
-	// print_arrays(st);
-
-	// process_stacks(st, pc, sorted);
-	// print_arrays(st);
-
-	// process_stacks(st, pc, sorted);
-	// print_arrays(st);
-
-	// process_stacks(st, pc, sorted);
-	// print_arrays(st);
-
-	// process_stacks(st, pc, sorted);
-	// print_arrays(st);
-
-	// process_stacks(st, pc, sorted);
-	// print_arrays(st);
-
-
-	// process_stacks(st, pc, sorted);
-	// print_arrays(st);
-
-	// process_stacks(st, pc, sorted);
-	// print_arrays(st);
-
-	// process_stacks(st, pc, sorted);
-	// print_arrays(st);
-
-	// process_stacks(st, pc, sorted);
-	// print_arrays(st);
-
-	// process_stacks(st, pc, sorted);
-	// print_arrays(st);
-
-	// process_stacks(st, pc, sorted);
-	// print_arrays(st);
-
-	// process_stacks(st, pc, sorted);
-	// print_arrays(st);
-
-
-	// process_stacks(st, pc, sorted);
-	// print_arrays(st);
-
-	// process_stacks(st, pc, sorted);
-	// print_arrays(st);
-
-	// process_stacks(st, pc, sorted);
-	// print_arrays(st);
-
-
-/////////
-
-
-	// process_stacks(st, pc, sorted);
-	// print_arrays(st);
-
-// 	process_stacks(st, pc, sorted);
-// 	print_piece(pc[0]);
-// 	print_piece(pc[1]);
-// 	print_piece(pc[2]);
-// 	print_piece(pc[3]);
-// 	print_piece(pc[4]);
-// 	print_arrays(st);
-// printf("check = %d\n", check_stacks(st));
-
-// printf("check = %d\n", check_stacks(st));
-	// process_stacks(st, pc, sorted);
-	// printf("AFTER PROCESSING\n");
-	// print_piece(pc[0]);
-	// print_piece(pc[1]);
-	// print_piece(pc[2]);
-	// print_piece(pc[3]);
-	// print_piece(pc[4]);
-	// print_piece(pc[5]);
-	// print_arrays(st);
-
-// print_sorted(sorted, st->n);
-// printf("check = %d\n", check_stacks(st));
-
-	// process_stacks(st, pc, sorted);
-	// print_piece(pc[0]);
-	// print_piece(pc[1]);
-	// print_piece(pc[2]);
-	// print_arrays(st);
-
-
-
-	while (check_stacks(st) == 0)
-	{
-		process_stacks(st, pc, sorted);
-	}
-	// print_arrays(st);
-
-
-	free(st->a);
-	free(st->b);
-	st->a = NULL;
-	st->b = NULL;
-	free(st);
-	st = NULL;
-
-
-	
-	return (0);
-}

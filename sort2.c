@@ -21,45 +21,45 @@ void	sort_2_elements(t_stacks *st, t_info *pc0)
 	if (pc0->amount + st->pa == st->n)
 	{
 		if (pc0->lt == 'A' && st->a[st->pa] > st->a[st->pa + 1])
-			action(st, "sa");
+			action(st, "sa", 1);
 		else if (pc0->lt == 'B' && st->b[st->pb + 1] < st->b[st->pb + 2])
 		{
-			action(st, "pa");
-			action(st, "pa");
-			action(st, "sa");
+			action(st, "pa", 1);
+			action(st, "pa", 1);
+			action(st, "sa", 1);
 		}
 		else if (pc0->lt == 'B' && st->b[st->pb + 1] > st->b[st->pb + 2])
 		{
-			action(st, "pa");
-			action(st, "pa");
+			action(st, "pa", 1);
+			action(st, "pa", 1);
 		}
 	}
 	else
 	{
 		if (pc0->lt == 'A' && st->a[st->pa] < st->a[st->pa + 1])
 		{
-			action(st, "ra");
-			action(st, "ra");
+			action(st, "ra", 1);
+			action(st, "ra", 1);
 		}
 		else if (pc0->lt == 'A' && st->a[st->pa] > st->a[st->pa + 1])
 		{
-			action(st, "sa");
-			action(st, "ra");
-			action(st, "ra");
+			action(st, "sa", 1);
+			action(st, "ra", 1);
+			action(st, "ra", 1);
 		}
 		else if (pc0->lt == 'B' && st->b[st->pb + 1] < st->b[st->pb + 2])
 		{
-			action(st, "pa");
-			action(st, "ra");
-			action(st, "pa");
-			action(st, "ra");
+			action(st, "pa", 1);
+			action(st, "ra", 1);
+			action(st, "pa", 1);
+			action(st, "ra", 1);
 		}
 		else if (pc0->lt == 'B' && st->b[st->pb + 1] > st->b[st->pb + 2])
 		{
-			action(st, "pa");
-			action(st, "pa");
-			action(st, "ra");
-			action(st, "ra");
+			action(st, "pa", 1);
+			action(st, "pa", 1);
+			action(st, "ra", 1);
+			action(st, "ra", 1);
 		}
 	}
 	pc0->lt = 0;

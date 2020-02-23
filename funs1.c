@@ -21,25 +21,25 @@ void	ft_swap(int *a, int *b)
 	*b = c;
 }
 
-int		ft_memcmp(const void *s1, const void *s2, size_t n)
-{
-	unsigned char	*p1;
-	unsigned char	*p2;
-	size_t			i;
+// int		ft_memcmp(const void *s1, const void *s2, size_t n)
+// {
+// 	unsigned char	*p1;
+// 	unsigned char	*p2;
+// 	size_t			i;
 
-	p1 = (unsigned char *)s1;
-	p2 = (unsigned char *)s2;
-	if (n == 0)
-		return (0);
-	i = 0;
-	while (i < n)
-	{
-		if (p1[i] != p2[i])
-			return (int)(p1[i] - p2[i]);
-		i++;
-	}
-	return (0);
-}
+// 	p1 = (unsigned char *)s1;
+// 	p2 = (unsigned char *)s2;
+// 	if (n == 0)
+// 		return (0);
+// 	i = 0;
+// 	while (i < n)
+// 	{
+// 		if (p1[i] != p2[i])
+// 			return (int)(p1[i] - p2[i]);
+// 		i++;
+// 	}
+// 	return (0);
+// }
 
 int		*sort_array(int *arr, int n)
 {
@@ -163,7 +163,7 @@ void	reverse_rotate_both(t_stacks *st)
 	reverse_rotate(st, 'B');
 }
 
-void	action(t_stacks *st, char *act)
+int		action(t_stacks *st, char *act, int fl)
 {
 	if (ft_memcmp(act, "sa", 2) == 0)
 		swap_in_stack(st, 'A');
@@ -188,8 +188,10 @@ void	action(t_stacks *st, char *act)
 	else if (ft_memcmp(act, "pb", 2) == 0)
 		push_1_to_2(st, 'A');
 	else
-		printf("NO"); //CORRECT AFTERWARDS !!!
-	printf("%s\n", act);
+		return (0); //CORRECT AFTERWARDS !!!
+	if (fl == 1)
+		ft_putendl(act);
 	st->oper++;
+	return (1);
 }
 
