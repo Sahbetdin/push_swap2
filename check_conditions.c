@@ -16,7 +16,8 @@ int check_if_num_backsp(int ac, char **av)
 		j = 0;
 		while (av[i][j] != '\0')
 		{
-			if (!((av[i][j] >= '0' && av[i][j] <= '9') || av[i][j] == ' '))
+			if (!((av[i][j] >= '0' && av[i][j] <= '9') || av[i][j] == ' ' ||
+			av[i][j] == '-' || av[i][j] == '+'))
 				return (0);
 			j++;
 		}
@@ -24,7 +25,6 @@ int check_if_num_backsp(int ac, char **av)
 	}
 	return (1);
 }
-
 
 /*
 ** check for duplicates in input
@@ -34,7 +34,6 @@ int check_if_num_backsp(int ac, char **av)
 
 int		check_if_dupl(t_stacks *st, int **srt)
 {
-	int		*sorted;
 	int		j;
 
 	*srt = make_me_sorted(st);
@@ -42,7 +41,15 @@ int		check_if_dupl(t_stacks *st, int **srt)
 	while (j < st->n - 1)
 	{
 		if ((*srt)[j] == (*srt)[j + 1])
-			return (free_st_a_dupl(st));
+		{
+			free(st->a);
+			st->a = NULL;
+			free(st);
+			st = NULL;
+			free(*srt);
+			*srt = NULL;
+			return (-3);
+		}
 		j++;
 	}
 	return (1);

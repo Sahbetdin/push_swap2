@@ -12,21 +12,18 @@
 
 #include "ps_header.h"
 
-void set_first_info(t_info *pc, int n)
+void	set_first_info(t_info *pc, int n)
 {
 	pc->begin = 0;
 	pc->end = n;
 	pc->amount = pc->end - pc->begin;
 	pc->lt = 'A';
-
 }
 
-//we need to be sure if next pc is available
-void divide_piece_info(t_info *pc, int flag)
+void	divide_piece_info(t_info *pc, int flag)
 {
-	int mid;
-	char c;
-	t_info *old;
+	int		mid;
+	t_info	*old;
 
 	old = pc;
 	pc++;
@@ -46,17 +43,19 @@ void divide_piece_info(t_info *pc, int flag)
 	old->amount = old->end - old->begin;
 }
 
-void		free_stacks(t_stacks *st)
+void	free_stacks(t_stacks *st)
 {
 	free(st->a);
 	free(st->b);
-	free(st);	
+	free(st);
 }
 
+/*
+** if pa is 0 and st->a is sorted, then return 1
+** else return 0
+*/
 
-//if pa is 0 and st->a is sorted, then return 1
-//else return 0
-int	check_stacks(t_stacks *st)
+int		check_stacks(t_stacks *st)
 {
 	int i;
 
@@ -65,15 +64,20 @@ int	check_stacks(t_stacks *st)
 	i = 0;
 	while (i < st->n - 1)
 	{
-		// printf("diff = %d\n", st->a[i] > st->a[i - 1]);
 		if (st->a[i] > st->a[i + 1])
-		{
-			// printf("st->a[i] = %d\n", st->a[i]);
-			// printf("st->a[i + 1] = %d\n", st->a[i + 1]);
-			// printf("NOW i = %d!\n", i);
 			return (0);
-		}
 		i++;
 	}
 	return (1);
+}
+
+/*
+** begin increases by delta
+** amount decreases by delta
+*/
+
+void	change_piece_beg_am(t_info *pc0, int delta)
+{
+	pc0->begin += delta;
+	pc0->amount -= delta;
 }

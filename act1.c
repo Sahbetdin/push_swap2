@@ -1,6 +1,16 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   act1.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: btrifle <marvin@42.fr>                     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/02/24 14:22:59 by btrifle           #+#    #+#             */
+/*   Updated: 2020/02/24 14:23:00 by btrifle          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "ps_header.h"
-
 
 void	ra_2(t_stacks *st)
 {
@@ -30,15 +40,4 @@ void	sa_rra(t_stacks *st)
 {
 	action(st, "sa", 1);
 	action(st, "rra", 1);
-}
-
-/*
-** begin increases by delta
-** amount decreases by delta
-*/
-
-void change_piece_beg_am(t_info *pc0, int delta)
-{
-	pc0->begin += delta;
-	pc0->amount -= delta;
 }

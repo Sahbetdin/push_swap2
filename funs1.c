@@ -21,26 +21,6 @@ void	ft_swap(int *a, int *b)
 	*b = c;
 }
 
-// int		ft_memcmp(const void *s1, const void *s2, size_t n)
-// {
-// 	unsigned char	*p1;
-// 	unsigned char	*p2;
-// 	size_t			i;
-
-// 	p1 = (unsigned char *)s1;
-// 	p2 = (unsigned char *)s2;
-// 	if (n == 0)
-// 		return (0);
-// 	i = 0;
-// 	while (i < n)
-// 	{
-// 		if (p1[i] != p2[i])
-// 			return (int)(p1[i] - p2[i]);
-// 		i++;
-// 	}
-// 	return (0);
-// }
-
 int		*sort_array(int *arr, int n)
 {
 	int i;
@@ -61,17 +41,19 @@ int		*sort_array(int *arr, int n)
 	return (arr);
 }
 
+/*
+** push from whatever in c is.
+*/
 
-//push from c.
 void	push_1_to_2(t_stacks *st, char c)
 {
-	if (c == 'A') //push from A to B
+	if (c == 'A')
 	{
 		st->b[st->pb] = st->a[st->pa];
 		st->pa++;
 		st->pb--;
 	}
-	else if (c == 'B') //push from B to A
+	else if (c == 'B')
 	{
 		st->pa--;
 		st->pb++;
@@ -79,7 +61,10 @@ void	push_1_to_2(t_stacks *st, char c)
 	}
 }
 
-//rotate what in c is
+/*
+** rotate what in c is
+*/
+
 void	rotate(t_stacks *st, char c)
 {
 	int tmp;
@@ -96,7 +81,7 @@ void	rotate(t_stacks *st, char c)
 	else if (c == 'B')
 	{
 		tmp = st->b[st->pb + 1];
-		i = st->pb; //starts from next one
+		i = st->pb;
 		while (++i < st->n - 1)
 			st->b[i] = st->b[i + 1];
 		st->b[i] = tmp;
@@ -130,68 +115,3 @@ void	reverse_rotate(t_stacks *st, char c)
 		st->b[st->pb + 1] = tmp;
 	}
 }
-
-//swap first two elements in stack c
-void	swap_in_stack(t_stacks *st, char c)
-{
-	if (c == 'A' && st->pa < st->n - 1)
-	{
-		ft_swap(st->a + st->pa, st->a + st->pa + 1);
-	}
-	else if (c == 'B' && st->pb + 2 < st->n)
-	{
-		// printf("WAS\n");
-		ft_swap(st->b + st->pb + 1, st->b + st->pb + 2);
-	}
-}
-
-void	swap_both(t_stacks *st)
-{
-	swap_in_stack(st, 'A');	
-	swap_in_stack(st, 'B');	
-}
-
-void	rotate_both(t_stacks *st)
-{
-	rotate(st, 'A');
-	rotate(st, 'B');
-}
-
-void	reverse_rotate_both(t_stacks *st)
-{
-	reverse_rotate(st, 'A');
-	reverse_rotate(st, 'B');
-}
-
-int		action(t_stacks *st, char *act, int fl)
-{
-	if (ft_memcmp(act, "sa", 2) == 0)
-		swap_in_stack(st, 'A');
-	else if (ft_memcmp(act, "sb", 2) == 0)
-		swap_in_stack(st, 'B');
-	else if (ft_memcmp(act, "ss", 2) == 0)
-		swap_both(st);
-	else if (ft_memcmp(act, "ra", 2) == 0)
-		rotate(st, 'A');
-	else if (ft_memcmp(act, "rb", 2) == 0)
-		rotate(st, 'B');
-	else if (ft_memcmp(act, "rra", 3) == 0)
-		reverse_rotate(st, 'A');
-	else if (ft_memcmp(act, "rrb", 3) == 0)
-		reverse_rotate(st, 'B');
-	else if (ft_memcmp(act, "rrr", 3) == 0)
-		reverse_rotate_both(st);
-	else if (ft_memcmp(act, "rr", 2) == 0)
-		rotate_both(st);
-	else if (ft_memcmp(act, "pa", 2) == 0)
-		push_1_to_2(st, 'B');
-	else if (ft_memcmp(act, "pb", 2) == 0)
-		push_1_to_2(st, 'A');
-	else
-		return (0); //CORRECT AFTERWARDS !!!
-	if (fl == 1)
-		ft_putendl(act);
-	st->oper++;
-	return (1);
-}
-

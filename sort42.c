@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   sort42.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: btrifle <marvin@42.fr>                     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/02/24 14:46:01 by btrifle           #+#    #+#             */
+/*   Updated: 2020/02/24 14:46:03 by btrifle          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "ps_header.h"
 
 void	sort_1_1(t_stacks *st, t_info *pc0, int *srt)
@@ -15,7 +27,7 @@ void	sort_1_1(t_stacks *st, t_info *pc0, int *srt)
 	}
 }
 
-void sort_4_st_pb_4(t_stacks *st, t_info *pc0, int *srt)
+void	sort_4_st_pb_4(t_stacks *st, t_info *pc0, int *srt)
 {
 	pa_2(st);
 	pa_2(st);
@@ -50,18 +62,18 @@ void	sort_4_st_pa_3(t_stacks *st, t_info *pc0, int *srt, int *addr_flag)
 	pb_2(st);
 	sa_ra(st);
 	if (st->a[st->pa] == srt[pc0->begin + 1])
-	{ //  2 | 1  * *  --> | 1 2   * * (take two elem from B)
+	{
 		action(st, "ra", 1);
 		pc0->lt = 'B';
 		*addr_flag = 20;
 	}
 	else if (st->b[st->pb + 1] == srt[pc0->begin + 1])
-	{ //  * | 1    2 *  -->  * | 1 2    * *
+	{
 		pa_ra(st);
 		sort_1_1(st, pc0, srt);
 	}
 	else if (st->b[st->pb + 2] == srt[pc0->begin + 1])
-	{ //  * | 1     * 2 -->  * | 1 2  *  *
+	{
 		action(st, "sb", 1);
 		pa_ra(st);
 		sort_1_1(st, pc0, srt);
@@ -72,14 +84,14 @@ void	sort_4_st_pb_3(t_stacks *st, t_info *pc0, int *srt)
 {
 	pa_2(st);
 	pa_ra(st);
-	if (st->a[st->pa + 1] == srt[pc0->begin + 1]) // A: * 2 [] 1, B: *
+	if (st->a[st->pa + 1] == srt[pc0->begin + 1])
 		action(st, "sa", 1);
-	if (st->a[st->pa] == srt[pc0->begin + 1]) // A: 2 * [] 1, B: *
+	if (st->a[st->pa] == srt[pc0->begin + 1])
 	{
 		action(st, "ra", 1);
-		sort_top_top(st, pc0);
+		sort_top_top(st);
 	}
-	else if (st->b[st->pb + 1] == srt[pc0->begin + 1]) // A: * * [] 1,  B: 2
+	else if (st->b[st->pb + 1] == srt[pc0->begin + 1])
 	{
 		pa_ra(st);
 		pc0->lt = 'A';

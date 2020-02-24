@@ -1,20 +1,21 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_atoi_backsp.c                                   :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: btrifle <marvin@42.fr>                     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/02/24 21:22:08 by btrifle           #+#    #+#             */
+/*   Updated: 2020/02/24 21:22:09 by btrifle          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "ps_header.h"
-
-static int	cut_backspaces(const char *s)
-{
-	int i;
-
-	i = 0;
-	while (s[i] && (s[i] == ' ' || s[i] == '\t' || s[i] == '\n' \
-		|| s[i] == '\v' || s[i] == '\f' || s[i] == '\r'))
-		i++;
-	return (i);
-}
 
 /*
 ** if int parsed then we put to p_numb what was parsed
 ** and return pointer to next char;
-** if int was overflowed then return NULL;  
+** if int was overflowed then return NULL;
 */
 
 char	*ft_atoi_backsp(const char *str, int *p_numb, int *n)
@@ -26,17 +27,11 @@ char	*ft_atoi_backsp(const char *str, int *p_numb, int *n)
 	res = 0;
 	i = 0;
 	sign = 1;
-	i += cut_backspaces(&str[i]);
+	i += ft_cut_backspaces(&str[i]);
 	if (str[i] == '-')
 		sign = -1;
 	if (str[i] == '+' || str[i] == '-')
 		i++;
-	// if (*str == '\0')
-	// 	...
-	// {
-	// 	ptr = NULL;
-	// 	return (1);
-	// }
 	if (ft_strstr(str, "2147483648") && sign == -1)
 	{
 		*p_numb = -2147483648;

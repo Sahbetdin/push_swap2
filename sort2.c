@@ -12,7 +12,26 @@
 
 #include "ps_header.h"
 
-
+void	sort_2_not_alone(t_stacks *st, t_info *pc0)
+{
+	if (pc0->lt == 'A' && st->a[st->pa] < st->a[st->pa + 1])
+		ra_2(st);
+	else if (pc0->lt == 'A' && st->a[st->pa] > st->a[st->pa + 1])
+	{
+		action(st, "sa", 1);
+		ra_2(st);
+	}
+	else if (pc0->lt == 'B' && st->b[st->pb + 1] < st->b[st->pb + 2])
+	{
+		pa_ra(st);
+		pa_ra(st);
+	}
+	else if (pc0->lt == 'B' && st->b[st->pb + 1] > st->b[st->pb + 2])
+	{
+		pa_2(st);
+		ra_2(st);
+	}
+}
 
 void	sort_2_elements(t_stacks *st, t_info *pc0)
 {
@@ -29,24 +48,6 @@ void	sort_2_elements(t_stacks *st, t_info *pc0)
 			pa_2(st);
 	}
 	else
-	{
-		if (pc0->lt == 'A' && st->a[st->pa] < st->a[st->pa + 1])
-			ra_2(st);
-		else if (pc0->lt == 'A' && st->a[st->pa] > st->a[st->pa + 1])
-		{
-			action(st, "sa", 1);
-			ra_2(st);
-		}
-		else if (pc0->lt == 'B' && st->b[st->pb + 1] < st->b[st->pb + 2])
-		{
-			pa_ra(st);
-			pa_ra(st);
-		}
-		else if (pc0->lt == 'B' && st->b[st->pb + 1] > st->b[st->pb + 2])
-		{
-			pa_2(st);
-			ra_2(st);
-		}
-	}
+		sort_2_not_alone(st, pc0);
 	zerofy_piece(pc0);
 }

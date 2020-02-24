@@ -12,21 +12,21 @@
 
 #include "ps_header.h"
 
-void sort_4_A(t_stacks *st, t_info *pc0, int *srt)
+void	sort_4_a(t_stacks *st, t_info *pc0, int *srt)
 {
 	int flag;
 
 	flag = 0;
 	if (st->a[st->pa + 1] == srt[pc0->begin])
 		action(st, "sa", 1);
-	if (st->a[st->pa] == srt[pc0->begin]) //&& pc0->amount + st->pa != st->n
-	{ //A: 1 * * *
+	if (st->a[st->pa] == srt[pc0->begin])
+	{
 		action(st, "ra", 1);
 		flag = 10;
 	}
-	else if (st->a[st->pa + 2] == srt[pc0->begin]) //A: * * 1 *
+	else if (st->a[st->pa + 2] == srt[pc0->begin])
 		sort_4_st_pa_2(st, pc0, srt);
-	else if (st->a[st->pa + 3] == srt[pc0->begin]) // * * * 1
+	else if (st->a[st->pa + 3] == srt[pc0->begin])
 		sort_4_st_pa_3(st, pc0, srt, &flag);
 	if (flag == 10)
 	{
@@ -40,23 +40,21 @@ void sort_4_A(t_stacks *st, t_info *pc0, int *srt)
 	}
 }
 
-
 void	sort_4_elements(t_stacks *st, t_info *pc0, int *srt)
 {
 	int k;
-	int flag;
 
 	k = 0;
 	if (pc0->lt == 'A' && pc0->amount + st->pa == st->n)
 		sort_4_only(st, pc0, srt);
 	else if (pc0->lt == 'A')
-		sort_4_A(st, pc0, srt);
+		sort_4_a(st, pc0, srt);
 	else if (pc0->lt == 'B')
 	{
-		if (st->b[st->pb + 2] == srt[pc0->begin]) // initial B: * 1 * *
+		if (st->b[st->pb + 2] == srt[pc0->begin])
 			action(st, "sb", 1);
 		if (st->b[st->pb + 1] == srt[pc0->begin])
-		{ // initial B: 1 * * *
+		{
 			pa_ra(st);
 			change_piece_beg_am(pc0, 1);
 			sort_3_elements(st, pc0, srt);
