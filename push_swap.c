@@ -42,6 +42,9 @@ int main(int ac, char **av)
 	// process_stacks(st, pc, sorted);
 	// process_stacks(st, pc, sorted);
 	// process_stacks(st, pc, sorted);
+	// printf("ffff\n");
+	// print_arrays(st);
+	
 	// process_stacks(st, pc, sorted);
 	// process_stacks(st, pc, sorted);
 	// process_stacks(st, pc, sorted);
@@ -81,6 +84,7 @@ int main(int ac, char **av)
 	{
 		process_stacks(st, pc, sorted);
 	}
+
 	// print_arrays(st);
 
 

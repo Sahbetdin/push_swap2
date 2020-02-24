@@ -57,7 +57,15 @@ void	reverse_rotate(t_stacks *st, char c);
 void	reverse_rotate_both(t_stacks *st);
 //action
 int		action(t_stacks *st, char *act, int fl);
-
+void	ra_2(t_stacks *st);
+void	pa_2(t_stacks *st);
+void	pa_ra(t_stacks *st);
+void	sa_ra(t_stacks *st);
+void	sa_rra(t_stacks *st);
+void	rra_sa(t_stacks *st);
+void	pb_2(t_stacks *st);
+void	zerofy_piece(t_info *pc0);
+void	change_piece_beg_am(t_info *pc0, int delta);
 //sort_1_1
 void	sort_1_1(t_stacks *st, t_info *pc0, int *srt);
 //sort <= 4 elements
@@ -65,14 +73,18 @@ void	sort_2_elements(t_stacks *st, t_info *pc0);
 void	sort_3_elements(t_stacks *st, t_info *pc0, int *srt);
 void	sort_4_elements(t_stacks *st, t_info *pc0, int *srt);
 void	sort_top_top(t_stacks *st, t_info *pc0);
+void	sort_4_st_pa_2(t_stacks *st, t_info *pc0, int *srt);
+void	sort_4_only(t_stacks *st, t_info *pc0, int *srt);
+void	sort_3_for_4(t_stacks *st, int min2);
+void	sort_4_st_pa_3(t_stacks *st, t_info *pc0, int *srt, int *addr_flag);
+void	sort_4_st_pb_3(t_stacks *st, t_info *pc0, int *srt);
+void	sort_4_st_pb_4(t_stacks *st, t_info *pc0, int *srt);
 //printing
 void	print_piece(t_info piece0);
 void	print_arrays(t_stacks *st);
 void	print_sorted(int *srt, int n);
-
 //in ps.c
 void	process_stacks(t_stacks *st, t_info *pc, int *sorted);
 void	divide_piece_info(t_info *pc, int flag);
 int		check_stacks(t_stacks *st);
-
 #endif

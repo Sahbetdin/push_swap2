@@ -17,35 +17,18 @@ void	sort_top_top(t_stacks *st, t_info *pc0)
 	if (st->a[st->pa] < st->b[st->pb + 1])
 	{ // [4]  [5]
 		action(st, "ra", 1);
-		action(st, "pa", 1);
-		action(st, "ra", 1);
+		pa_ra(st);
 	}
 	else if (st->a[st->pa] > st->b[st->pb + 1])
 	{ // [5]  [4]
 		action(st, "pa", 1);
-		action(st, "ra", 1);
-		action(st, "ra", 1);
+		ra_2(st);
 	}
-	// if ((pc0-1)->lt == 'A')
-	// {
-	// 	printf("         A\n");
-	// }
-	// else if ((pc0-1)->lt == 'B')
-	// {
-	// 	printf("         B\n");
-	// }
-
-
 }
 
 
 void	sort_3_elements(t_stacks *st, t_info *pc0, int *srt)
 {
-	// printf("NOW WE SORT 3 ELEMENTS\n");
-	// printf("begin %d\n", srt[pc0->begin]);
-	// printf("end  %d\n", srt[pc0->end - 1]);
-	// printf("lt  %c\n", pc0->lt);
-
 	if (pc0->lt == 'A' && pc0->amount + st->pa == st->n)
 	{
 		if (st->a[st->pa] < st->a[st->pa + 2] && st->a[st->pa + 2] < st->a[st->pa + 1])
@@ -58,19 +41,14 @@ void	sort_3_elements(t_stacks *st, t_info *pc0, int *srt)
 			if (st->a[st->pa] < st->a[st->pa + 2]) // 2 1 3
 				action(st, "sa", 1);
 			else if (st->a[st->pa] > st->a[st->pa + 2]) // 3 1 2
-			{
 				action(st, "ra", 1);
-			}
 		}
 		else if (st->a[st->pa + 2] == srt[pc0->begin])
 		{ // * * 1
 			if (st->a[st->pa] < st->a[st->pa + 1]) // 2 3 1
 				action(st, "rra", 1);
 			else if (st->a[st->pa] > st->a[st->pa + 1]) // 3 2 1
-			{
-				action(st, "sa", 1);
-				action(st, "rra", 1);
-			}
+				sa_rra(st);
 		}
 	}
 	else if (pc0->lt == 'A')
@@ -82,115 +60,41 @@ void	sort_3_elements(t_stacks *st, t_info *pc0, int *srt)
 		}
 		else if (st->a[st->pa + 1] == srt[pc0->begin]) // * 1 *
 		{ //the lowest element is the second
-			action(st, "sa", 1);
-			action(st, "ra", 1);
+			sa_ra(st);
 			sort_2_elements(st, pc0);
 		}
 		else if (st->a[st->pa + 2] == srt[pc0->begin]) // * * 1
 		{ 
 			action(st, "pb", 1);
-			action(st, "sa", 1);
-			action(st, "ra", 1); // after that we have  two elements on both stacks
+			sa_ra(st);
 			sort_top_top(st, pc0);
 		}
 	}
-	//след кусок никогда не будет. нет такого, чтобы в В осталось три элем, а А пустой
-	// else if (pc0->lt == 'B' && pc0->amount + st->pb == st->n)
-	// { //three elements alone
-	// 	printf("OF COURSE\n");
-	// 	if (st->b[st->pb + 1] == srt[pc0->begin]) //B: 1 * * далее пусто
-	// 	{ //first elem in B is the lowest
-	// 		action(st, "pa");
-	// 		action(st, "pa");
-	// 		action(st, "sa");
-	// 		action(st, "pa");
-	// 		if (st->a[st->pa] == srt[pc0->begin + 1]) //second lowest on the top of A: 2 1 3
-	// 			action(st, "sa");
-	// 		else if (st->a[st->pa] == srt[pc0->begin + 1]) //sec lowest is the third in A: 3 1 2
-	// 			action(st, "ra");
-	// 	}
-	// 	else if (st->b[st->pb + 2] == srt[pc0->begin])
-	// 	{ // B: * 1 *
-	// 		action(st, "pa");
-	// 		action(st, "pa");
-	// 		action(st, "pa");
-	// 		if (st->a[st->pa] == srt[pc0->begin + 1]) //A: 2 1 3
-	// 			action(st, "sa");
-	// 		else if (st->a[st->pa + 2] == srt[pc0->begin + 1]) //B: 3 1 2
-	// 			action(st, "ra");
-	// 	}
-	// 	else if (st->b[st->pb + 3] == srt[pc0->begin])
-	// 	{ // B: * * 1
-	// 		action(st, "pa");
-	// 		action(st, "pa");
-	// 		if (st->a[st->pa] == srt[pc0->begin + 1]) // A: 2 3, B: 1
-	// 			action(st, "pa");
-	// 		else if (st->a[st->pa + 1] == srt[pc0->begin + 1]) // A: 3 2, B: 1
-	// 		{
-	// 			action(st, "sa");
-	// 			action(st, "pa");
-	// 		}
-	// 	}
-	// }
 	else if (pc0->lt == 'B')
 	{
 		if (st->b[st->pb + 1] == srt[pc0->begin])
 		{ // B: 1 * *
-		// && st->b[st->pb + 2] == srt[pc0->begin + 1]
-			action(st, "pa", 1);
-			action(st, "ra", 1);
+			pa_ra(st);
 			action(st, "pa", 1); //push second element to A and work up from here
 			sort_top_top(st, pc0);
-			//замениил на функцию
-			// if (st->a[st->pa] == srt[pc0->begin + 1]) //A: 2 [other elements] 1, B: 3
-			// {
-			// 	action(st, "ra");
-			// 	action(st, "pa");
-			// 	action(st, "ra");
-			// }
-			// else if (st->a[st->pa] == srt[pc0->begin + 2]) //A: 3 [] 1, B: 2
-			// {
-			// 	action(st, "pa");
-			// 	action(st, "ra");
-			// 	action(st, "ra");
-			// }
 		}
 		else if (st->b[st->pb + 2] == srt[pc0->begin])
 		{ // B: * 1 *
-
-			action(st, "pa", 1);
-			action(st, "pa", 1);
+			pa_2(st);
 			action(st, "ra", 1);
 			sort_top_top(st, pc0);
 		}
 		else if (st->b[st->pb + 3] == srt[pc0->begin])
 		{ // B: * * 1
-			action(st, "pa", 1);
-			action(st, "pa", 1);
-			action(st, "pa", 1);
-			action(st, "ra", 1);
-			// print_piece(*pc0);
+			pa_2(st);
+			pa_ra(st);
 			pc0->lt = 'A';
 			pc0->begin++;
 			pc0->amount--; 
-
-		// printf("NNNU\n");
-		// print_arrays(st);
-			// print_piece(*pc0);
-
 			sort_2_elements(st, pc0);
-		// printf("NNNU\n");
-		// print_arrays(st);
-
 		}
-			// printf("A Possibly here\n");
-			// print_piece(pc0[0]);
-			// printf("A Possibly here\n");
 	}
-	pc0->lt = 0;
-	pc0->begin = 0;
-	pc0->end = 0;
-	pc0->amount = 0;
+	zerofy_piece(pc0);
 }
 
 //gcc parse_args.c ft_atoi_backsp.c funs1.c ps.c sort2.c sort3.c sort4.c fun_print.c -o push_swap my_libft/libft.a

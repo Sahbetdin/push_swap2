@@ -8,7 +8,8 @@ CFLAGS = -Wall -Wextra -Werror
 
 
 SRC = parse_args.c ft_atoi_backsp.c funs1.c ps.c sort2.c \
-	set.c sort3.c sort4.c fun_print.c check_conditions.c
+	set.c sort3.c sort4.c fun_print.c check_conditions.c \
+	act1.c sort41.c sort42.c
 
 OBJECTS = $(patsubst %.c, %.o, $(SRC))
 
